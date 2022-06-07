@@ -1,0 +1,1809 @@
+\documentclass[a4paper]{report}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{thm-restate}
+\usepackage{array}
+\usepackage{float}
+\usepackage{textcomp}
+\usepackage{gensymb}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{mathtools}
+\usepackage{systeme}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+
+\usepackage{tikz}
+
+
+\usepackage[left=2.8cm,right=2.8cm]{geometry}
+
+
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{32pt}{24pt}
+\titlespacing*{\subsection}{0pt}{24pt}{18pt}
+
+\usepackage{enumitem}
+\setlist{itemsep=0pt,topsep=2pt,parsep=2pt}
+\setlist[enumerate]{label=(\roman*)}
+
+\usepackage[hidelinks]{hyperref}
+\usepackage{cleveref}
+
+
+\usepackage[square,numbers]{natbib}
+\bibliographystyle{abbrvnat}
+
+\newcommand{\ind}{\hspace{15pt}}
+
+\newcommand{\tophat}{\hat{\phantom{.}}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Nat}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\F}{\mathcal{F}}
+\renewcommand{\L}{\mathcal{L}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\N}{\mathcal{N}}
+\newcommand{\U}{\mathcal{U}}
+\newcommand{\Rns}{\mathcal{R}}
+\newcommand{\PS}{\mathcal{P}}
+
+\newcommand{\x}{\overline{x}}
+\newcommand{\y}{\overline{y}}
+\newcommand{\w}{\overline{w}}
+\newcommand{\z}{\overline{z}}
+\renewcommand{\a}{\overline{a}}
+\renewcommand{\b}{\overline{b}}
+\renewcommand{\c}{\overline{c}}
+\renewcommand{\d}{\overline{d}}
+
+\renewcommand{\implies}{\Rightarrow}
+\newcommand{\simplies}{\rightarrow}
+\renewcommand{\iff}{\Leftrightarrow}
+\newcommand{\siff}{\leftrightarrow}
+
+\newcommand\restr[2]{{\left.\kern-\nulldelimiterspace#1\right|_{#2}}}
+
+\DeclareMathOperator{\Def}{Def}
+\DeclareMathOperator{\Th}{Th}
+\DeclareMathOperator{\VC}{VC}
+\DeclareMathOperator{\EM}{EM}
+\DeclareMathOperator{\tp}{tp}
+\DeclareMathOperator{\alt}{alt}
+\DeclareMathOperator{\acl}{acl}
+\DeclareMathOperator{\dcl}{dcl}
+\DeclareMathOperator{\cl}{cl}
+\DeclareMathOperator{\Inf}{Inf}
+\DeclareMathOperator{\st}{st}
+\DeclareMathOperator{\ded}{ded}
+\DeclareMathOperator{\aind}{ind}
+\DeclareMathOperator{\Stab}{Stab}
+
+
+\usepackage{thmtools}
+
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{conj}[thm]{Conjecture}
+
+
+\newtheorem*{defn*}{Definition}
+\newtheorem*{lem*}{Lemma}
+\newtheorem*{thm*}{Theorem}
+\newtheorem*{prop*}{Proposition}
+
+\newtheorem{mleminner}{Lemma}
+\newenvironment{mlem}[1]{%
+	\renewcommand\themleminner{#1}%
+	\mleminner
+}{\endmleminner}
+
+\newtheoremstyle{remstyle}
+{\topsep}
+{\topsep}
+{}
+{}
+{\itshape}
+{.}
+{.5em}
+{}
+
+\theoremstyle{remstyle}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem*{rem*}{Remark}
+\newtheorem*{notation}{Notation}
+\newtheorem*{note}{Note}
+\newtheorem*{claim*}{Claim}
+
+\newtheorem{claiminner}{Claim}
+\newenvironment{claim}[1]
+{\renewcommand\theclaiminner{#1}\claiminner}
+{\endclaiminner}
+
+\makeatletter
+\providecommand*{\dashv}{%
+	\mathrel{%
+		\mathpalette\@dashv\vdash
+	}%
+}
+\newcommand*{\@dashv}[2]{%
+	\reflectbox{$\m@th#1#2$}%
+}
+\makeatother
+
+\newenvironment{subproof}[1][\proofname]{%
+	\renewcommand{\qedsymbol}{$\dashv$}%
+	\begin{proof}[#1]%
+	}{%
+	\end{proof}%
+}
+
+
+\renewcommand{\baselinestretch}{1.1}
+
+\pagestyle{fancy}
+\fancyhead{} % clear the headers
+\fancyhead[L]{\nouppercase{\leftmark}}
+\renewcommand{\chaptermark}[1]{\markboth{\thechapter. #1}{}}
+
+\newcommand{\uchapter}[1]{%
+	\chapter*{#1}%
+	\markboth{#1}{}%
+	\addcontentsline{toc}{chapter}{#1}%
+}
+
+
+
+
+\begin{document}
+
+\title{NIP Theories and O-minimality \\ \vspace{+8pt} \large Part III Essay}
+
+\author{University of Cambridge}
+\date{2021}
+
+\maketitle
+
+\vspace{+16pt}
+
+\tableofcontents
+
+\newpage
+
+
+\uchapter{Introduction}
+
+\ind The independence property (IP) was isolated by Shelah in \cite{nip og}, as a combinatorial property of formulas which serves as the final dividing line in the classification of theories according to the number of complete types they can have (see \cite{stability function, six classes}). Some properties of NIP theories (i.e.\ theories lacking the independence property) were established early on by Shelah and Poizat. At the time however, model theory was mostly focused on the study of stability, so no systematic effort to study NIP theories was made.
+
+\ind Over the years more and more interesting examples of unstable structures appeared, many of which were identified to be NIP. One of the most important among them is the class of o-minimal structures. O-minimality was formally introduced in \cite{defI} by Pillay and Steinhorn, in their effort to rigorously study the first order properties of linearly ordered structures. The concept itself had appeared before under a different name, in the work of van den Dries on definable sets in expansions of the real field $\R$. Partly motivated by the concept of \emph{strong minimality}, Pillay and Steinhorn isolated the property which van den Dries used in his work, and quickly developed a rich theory around it (see \cite{defI,defII,discrete,defIII}).
+
+\ind In the last 20 years, the study of groups definable in o-minimal structures has sparked a new interest for NIP theories and their properties. In particular, Keisler measures, which are tools initially developed for the purpose of extending properties of types from a stable to an NIP setting, have now been used to solve some deep questions about the structural properties of o-minimal groups. As a result, NIP has been identified as a natural context for the study of definable groups in o-minimal theories, and the intersection of NIP and o-minimality is currently a very active area of research.
+
+\ind The purpose of this essay is to introduce some fundamental results concerning NIP theories and o-minimality, to present a proof that the complete theory of an o-minimal structure is NIP, and to discuss Pillay's conjecture about definable groups in o-minimal structures, in the solution of which Keisler measures were first used. The essay is structured as follows.
+
+\ind The main text consists of 3 chapters. In Chapter 1, we introduce some basic results involving NIP formulas and theories. We provide some examples, present an equivalent characterisation of the NIP property for formulas, and prove that a theory is NIP if and only if all formulas in a single object variable are NIP. The main source used in this chapter is \cite{nip guide}.
+
+\ind In Chapter 2, we introduce the notion of o-minimality. We outline the proof of the \emph{decomposition theorem} for definable sets in o-minimal structures, and use (a part of) it to prove that the complete theory of an o-minimal structure is NIP. Our proof of the latter statement might be of some interest, as it is not the original one given by Pilay and Steinhorn in \cite{defI}. While the argument we present can be easily deduced from \cite{defII}, \cite{discrete} and \cite{defIII} by the same authors, in modern literature it usually appears only in the context of dense o-minimal structures. This is because discrete o-minimal structures are ``trivial'', in a sense we also explain in Chapter 2.
+
+\ind In Chapter 3, we focus on Pillay's conjecture. We build up some of the required background in order to understand the statement of the conjecture, and explain how NIP is involved in its solution. Our main sources include \cite{typedef}, \cite{groups measures nip}, \cite{Pillay survey} and \cite{survey1}.
+
+\ind Finally, we also include an appendix, in which we give proofs for various statements made throughout the text. Most importantly, we include a rather comprehensive outline of the proof of the cell decomposition theorem in the dense case, as the ideas used in it can help the reader gain a lot of intuition about the form of definable sets, and the analytical properties of definable functions in arbitrary dense o-minimal structures.
+
+\ind Our notation is standard throughout. A working knowledge of elementary ideas at the level of a first course in model theory is assumed.
+
+
+\newpage
+
+\chapter{NIP Formulas and Theories}
+
+\ind In this chapter we define IP, and present the basic theory concerning itself and its negation. We also develop some of the tools that we will need later in order to prove that o-minimal structures have NIP theories. The general setting throughout is a complete theory $T$ with infinite models in a language $\L$. The properties we discuss are mainly syntactic in nature, so unless a specific model of a theory is mentioned, we assume to be working in a monster model $\U$, which is taken to be  $\lambda$-saturated and $\lambda$-homogeneous for a sufficiently large cardinal $\lambda$. We implicitly assume that all sets of interest have cardinality smaller than $\lambda$.
+
+\begin{notation}\
+	\begin{itemize}
+		\item In this chapter we will not differentiate between elements $a\in U$ and tuples $\a\in U^n$ for $n<\omega$. If such a distinction is necessary, it will be mentioned explicitly.
+
+		\item For a linearly ordered set $I$ and a sequence $A=(a_i:i\in I)$, by ``order on $A$'' we mean the linear order induced by $I$. We call a tuple $a=(a_{i_1},\ldots,a_{i_n})$ of $a_i\in A$ ``increasing'' if $i_1<\ldots<i_n$.
+	\end{itemize}
+\end{notation}
+
+\section{The Independence Property}
+
+\ind We start with our main definitions and results on IP for formulas.
+
+\begin{defn}[Independence property]\label{ip}
+	An $\L$-formula $\phi(x;y)$ is said to have \emph{IP} (\emph{the independence property}) if there exist sequences $(a_i:i<\omega)$ and $(b_S: S\subseteq \omega)$ in $U$ such that:
+	\begin{equation*}
+		\models \phi(a_i,b_S) \iff i\in S.
+	\end{equation*}
+	If $\phi(x;y)$ does not have IP, we will say that it is \emph{NIP} (\emph{dependent}).
+\end{defn}
+
+\begin{rem}\
+	\begin{enumerate}
+		\item Note that the definition makes sense in the context of some fixed underlying theory $T$. In that case, by compactness one could write an equivalent syntactic definition of IP. The same formula can be dependent or independent, subject to the underlying theory (cf.\ \Cref{nipformex} (i)).
+
+		\item We can extend the definition to formulas with parameters. Note that if  $\phi(x;y\tophat z)$ is NIP, then $\phi(x;y,c)$ is NIP for all $|z|$-tuples $c$.
+	\end{enumerate}
+\end{rem}
+
+\ind We will often use the following convenient terminology:
+
+\begin{defn}[Shatter]
+	Given a formula $\phi(x;y)$, we say that a set $A$ of $|x|$-tuples is \emph{shattered} by $\phi$ if there exists a sequence $(b_S: S\subseteq A)$ such that for all $a\in A$:
+	\begin{equation*}
+		\models \phi(a;b_S) \iff a\in S.
+	\end{equation*}
+\end{defn}
+
+\begin{rem}
+	So $\phi(x;y)$ has IP if there is a set of $|x|$-tuples $A$ with $|A|=\aleph_0$ which is shattered by $\phi$.
+\end{rem}
+
+\ind By compactness we immediately deduce the following:
+
+\begin{lem}\label{ipcomp}\
+	\begin{enumerate}
+		\item If $\phi(x;y)$ has IP, then for any linear order $I$ there is a sequence $(a_i:i\in I)$ which is shattered by $\phi$. In particular, for any cardinal $\kappa$ there is a set of size $\kappa$ which is shattered by $\phi$.
+		\item If $\phi(x;y)$ is NIP, then there exists $n<\omega$ such that no set of size $n$ is shattered by $\phi$.
+	\end{enumerate}
+\end{lem}
+
+\ind A quantity closely related to IP is the \emph{VC-dimension} of a formula $\phi(x;y)$, defined as the surpemum of all $n<\omega$ such that $\phi(x;y)$ shatters a set of size $n$. So a formula is IP if and only if its VC-dimension is infinite. VC-dimension was originally formulated in \cite{VC} by Vapnik and Chervonenkis in the context of statistical learning theory, as a quantity associated to any family of sets. It is now a notion widely used in areas such as combinatorics, neural networks, and computational geometry. The connection between the independence property and the VC-dimension was first observed by Laskowski in \cite{VC 2}.
+
+\ind IP comes with a natural symmetry, in the sense that it is preserved if we switch the roles of $x$ and $y$. Denote this switch by $\phi^{-1}(y;x)$, i.e.\ $\phi^{-1}(y;x)$ is the formula $\phi(x;y)$, where $x$ is considered a tuple of parameters and $y$ a tuple of free variables. Then we get the following:
+
+\begin{lem}\label{swap}
+	A formula $\phi(x;y)$ has IP if and only if $\phi^{-1}(y;x)$ has IP.
+\end{lem}
+
+\begin{proof}
+	Clearly the $(\implies)$ direction is enough. By \Cref{ipcomp} (ii), it suffices to show that for all $n<\omega$, $\phi^{-1}(y;x)$ shatters a set of size $n$. Fix some $n$, then since $\phi(x;y)$ has IP, there are sequences $(a_s:s\in\PS(n))$ and $(c_S:S\subseteq\PS(n))$ such that $\models\phi(a_s;c_S) \iff s\in S$. For $i<n$ let $S_i=\{s\in\PS(n):i\in s\}$, and $b_i = c_{S_i}$. Then we have:
+	\begin{equation*}
+		\models\phi^{-1}(b_i;a_s) \: \iff \:\, \models\phi(a_s;c_{S_i}) \: \iff \: s \in S_i \: \iff\: i\in s,
+	\end{equation*}
+	which proves the claim.
+\end{proof}
+
+\ind We will now look at some examples of IP/NIP formulas.
+
+\begin{exmp}\label{nipformex}\
+	\begin{enumerate}[itemsep=12pt]
+		\item It is easy to see that stable formulas are NIP, since if for sequences $(a_i:i<\omega)$, $(b_S:S\subseteq\omega)$ we have $\models\phi(a_i;b_S)\iff i\in S$, then certainly $\models\phi(a_i;b_j)\iff i<j$, i.e.\ $\phi$ has the order property. In fact we can say a bit more. Suppose $\phi(x;y)$ has IP, then so does $\phi^{-1}(y;x)$ by \Cref{swap}. By compactness, this is witnessed by sequences $A=(a_i:i<\kappa)$ and $B=(b_S:S\subseteq\kappa)$ for any $\kappa$. So for each $S\subseteq\kappa$ the collection $p_S(x)=\{\phi(x;a_i):i\in S\}\cup\{\neg\phi(x;a_i):i\not\in S\}$ is a complete $\phi$-type over $A$ (realised by $b_S$), and for $S\neq S'$ we have $p_S\neq p_{S'}$ (since clearly $b_S\neq b_{S'}$). We have therefore showed:
+
+		      \begin{cor}\label{stable->nip}\
+			      \begin{enumerate}
+				      \item Stable formulas are NIP.
+				      \item If $\phi$ has IP, then for all cardinals $\kappa$ there is some parameter set $A$ of size $\kappa$ with $|S_{\phi}(A)|=2^{\kappa}$.
+			      \end{enumerate}
+		      \end{cor}
+
+		\item From the definitions and \Cref{ipcomp} (ii), we get the following:
+		      \begin{lem}
+			      A formula $\phi(x;y)$ has IP if and only if for every finite bipartite graph on sets $(X,Y)$, there exist sequences $(a_x:x\in X)$ and $(b_y:y\in Y)$ such that $\models\phi(a_x;b_y)\iff x\sim y$.
+		      \end{lem}
+		      \begin{proof}
+			      $(\implies)$: Fix sequences $(a_i:i<\omega)$, $(b_S:S\subseteq \omega)$ witnessing that $\phi$ is IP, and a bipartite graph on $(n,Y)$, for some finite set $Y$ and $n<\omega$. Then interpret $i<n$ as $a_i$ and $y\in Y$ as $b_{\Gamma(y)}$ (recall: $\Gamma(y) :=\{i<n:i\sim y\}$).
+
+			      $(\Leftarrow)$: For $n<\omega$ define a bipartite graph on $(n,\PS(n))$, where $i\sim S\iff i\in S$. Then $(a_i:i<n)$, $(b_S:S\subseteq \PS(n))$ witness that $\phi$ shatters a set of size $n$.
+		      \end{proof}
+
+		      So if $\phi(x;y):=(x\sim y)$ and $(G,\sim)$ is an infinite graph, then $\phi$ has IP in $\Th(G)$ if and only if all finite bipartite graphs embed in some elementary extension of $G$ (hence also in $G$ itself). In particular, this is true for the Rado graph $G_R$ (since all finite graphs embed in $G_R$). In fact, since for all finite disjoint $X,Y\subseteq V(G_R)$ there is a vertex $u\not\in X\cup Y$ such that $u\sim x$ for $x\in X$ and $u\not\sim y$ for $y\in Y$, it follows that $\phi$ shatters every finite subset of $V(G_R)$.
+
+		\item In any complete theory $T$ with infinite models, the formula $\phi(x;y) :=(x=y)$ is NIP (as it has VC-dimension 1).
+
+		\item Let $T=\Th(I)$, where $(I,<,\ldots)$ is an expansion of an infinite linear order (e.g.\ $T=$ DLO, the theory of dense linear orders without endpoints). Then $\phi(x;y):=(x<y)$ is NIP. Indeed, given $a_1<a_2$, there is no $b_{\{2\}}$ such that
+		      \begin{equation*}
+			      \models \big(a_i < b_{\{2\}}\big) \iff i=2,
+		      \end{equation*}
+		      so $\phi$ has VC-dimension 1.
+		\item Let $T=\Th(\Nat,0,+,\cdot,s)$, and define the formula $\phi(x;y) := (x\,|\, y)$ by $x\,|\, y\siff\exists z\,(x\cdot z=y)$. Then $\phi$ has IP in $T$. Indeed, for $n<\omega$ let $(a_i:i<n)$ be the first $n$ primes and let $b_S=\prod_{i\in S}p_i$. Then we have $\models (a_i\,|\, b_S)\iff i\in S$.
+	\end{enumerate}
+\end{exmp}
+
+\ind We will now provide an equivalent characterisation of IP for formulas. In order to do this, we need first to introduce the concept of \emph{indiscernible} sequences, i.e.\ sequences which are homogeneous in a sense we will now see.
+
+\begin{defn}[Indiscernible sequence]
+	Let $I$ be some infinite index set and $B$ be a parameter set. A sequence $A=(a_i:i\in I)$ of tuples is called $B$-\emph{indiscernible} if for all $m<\omega$ and for all $i_1<\cdots<i_m$, $j_1<\cdots<j_m$ in $I$ we have $(a_{i_1},\ldots,a_{i_m})\equiv_B(a_{j_1},\ldots, a_{j_m})$.
+
+	$A$ is called $B$-\emph{totally indiscernible} if every permutation of $A$ is $B$-indiscernible, that is if for all $m<\omega$ and for all distinct $i_1,\ldots,i_m$ and distinct $j_1,\ldots,j_m$ in $I$ we have $(a_{i_1},\ldots,a_{i_m})\equiv_B(a_{j_1},\ldots, a_{j_m})$.
+\end{defn}
+
+\ind As usual, if $B=\emptyset$ above it will be omitted. Let us now define the quantity we want to relate independence with:
+
+\begin{defn}[Alternation number]\label{defalt}
+	Consider a formula $\phi(x;y)$. The \emph{alternation number} of $\phi$ (denoted by $\alt(\phi)$) is the maximal $n<\omega$ (if it exists) such that for some indiscernible sequence $(a_i:i<\omega)$ and for some $|y|$-tuple $b$, $\omega$ can be partitioned into $n$ consecutive segments $I_1,\ldots,I_n$ such that:
+	\begin{itemize}
+		\item for all $k=1,\ldots,n$, either $\models \phi(a_i;b)$ for all $i\in I_k$ or $\models\neg\phi(a_i;b)$ for all $i\in I_k$;
+		\item for all $k=1,\ldots,n-1$, if $i\in I_k$, $j\in I_{k+1}$ then $\models (\phi(a_i;b)\siff\neg\phi(a_j;b))$.
+	\end{itemize}
+
+	If no such $n$ exists, define $\alt(\phi)$ to be infinity.
+\end{defn}
+
+\begin{rem}\label{equivalt}
+	It is immediate by definition that an infinite subsequence of an indiscernible sequence is also indiscernible. Therefore, $\alt(\phi)=\infty$ if and only if there exists an indiscernible sequence $A=(a_i:i<\omega)$ and some tuple $b$ such that for all $i$ we have $\models (\phi(a_i;b)\siff\neg\phi(a_{i+1};b))$, or equivalently (possibly after removing $a_0$ and relabelling), $\models \phi(a_i;b)\iff i\equiv 0\bmod 2$.
+\end{rem}
+
+\ind We will show that a formula $\phi$ has IP if and only if $\alt(\phi)=\infty$. The power of this characterisation does not come from any numerical value of $\alt(\phi)$, but rather from establishing a relation between IP and indiscernible sequences, which are ``combinatorially rich'' (i.e.\ very structured) objects, and an integral part of the study of NIP theories. An immediate corollary is the following:
+
+\begin{cor}\label{nipendsegment}
+	A formula $\phi(x;y)$ is NIP if and only if for all indiscernible sequences $(a_i:i\in I)$ and $|y|$-tuples $b$ there exists some $j \in I$ such that either $\models\phi(a_i;b)$ for all $i>j$ or $\models\neg\phi(a_i;b)$ for all $i> j$.
+\end{cor}
+
+\ind This is in fact often the most useful characterisation of NIP. In order to establish the relation between NIP and the alternation number, we need another preliminary definition.
+
+\begin{defn}[EM-type]
+	Let $A=(a_i:i\in I)$ be any sequence and $B$ be a parameter set. Define the \emph{EM-type} of $A$ over $B$ (shorthand for \emph{Ehrenfeucht-Mostowski type}, denoted by $\EM_B(A)$) to be the set of all $\L_B$-formulas $\phi(x_1,\ldots,x_n)$ (for some $n<\omega$), such that for all $i_1<\cdots<i_n$ in $I$ we have $\models \phi(a_{i_1},\ldots,a_{i_n})$.
+\end{defn}
+
+\begin{rem}
+	Note that a sequence is indiscernible if and only if its EM-type is complete.
+\end{rem}
+
+\begin{notation}
+	Given two sequences $A,B$ and a parameter set $C$ we will say that $B$ \emph{realises} the EM-type of $A$ over $C$, and write $B\models \EM_C(A)$, if $\EM_C(A)\subseteq\EM_C(B)$. If $B=\emptyset$, it will be omitted.
+\end{notation}
+
+\ind We will also need the following lemma, which says that without loss of generality we may assume that all sequences of interest are indiscernible. The proof is a nice application of compactness and Ramsey's theorem, and can be found in the appendix.
+
+\begin{restatable}[]{lem}{indramsey}\label{indramsey}
+	Let $A=(a_i:i\in I)$ be any infinite sequence, $C$ be a parameter set and $J$ be any infinite index set. Then there exists an indiscernible sequence $B=(b_j:j\in J)$ such that $B\models \EM_C(A)$.
+\end{restatable}
+
+\ind We can finally prove:
+
+\begin{prop}\label{ipalt}
+	A formula $\phi$ has IP if and only if $\alt(\phi)=\infty$.
+\end{prop}
+
+\begin{proof}[Proof]
+	We will show that a formula $\phi(x;y)$ has IP if and only if there exist an indiscernible sequence $A=(a_i:i<\omega)$ and a tuple $b$ such that $\models \phi(a_i;b) \iff i \equiv 0 \bmod 2$. By \Cref{equivalt}, this gives the desired characterisation.
+
+	$(\implies)$: Suppose $\phi(x;y)$ has IP, and let $C=(c_i:i<\omega)$ be shattered by $\phi$. By \Cref{indramsey}, there exists an indiscernible sequence $A=(a_i:i<\omega)$ such that $A\models\EM(C)$. Consider the collection of formulas $p(y)=\{\phi(a_{2i};y):i<\omega\}\cup\{\neg\phi(a_{2i+1};y):i<\omega\}$. Now for finite $q\subseteq p$, let $I,J\subseteq \omega$ be finite, disjoint, such that $q(y) =\{\phi(a_i;y):i\in I\}\cup\{\neg\phi(a_i;y):i\in J\}$. Consider the formula
+	\begin{equation*}
+		\psi(\x) := \exists y\Big(\bigwedge_{i\in I}\phi(x_i;y)\,\wedge\,\bigwedge_{i\in J}\neg\phi(x_i,y)\Big),
+	\end{equation*}
+	where $\x$ is increasing. Then $\psi\in\EM(C)\subseteq\EM(A)$ (since $\phi$ shatters $C$), so $\models\psi(\a)$, where $\a=(a_i:i\in I\cup J)$ is also increasing. So $q$ is consistent, and hence so is $p$ by compactness (in particular, there is some tuple $b$ such that $\models p(b)$, by saturation).
+
+	$(\Leftarrow)$: Suppose there are such indiscernible $A$ and tuple $b$ for $\phi$. We will show that $\phi$ shatters $\{a_i:i<n\}$ for all $n<\omega$. Fix some $n$ and some $I\subseteq n$, and let $J=n\backslash I$. It suffices to show that the finite collection of formulas $p(y)=\{\phi(a_i;y):i\in I\}\cup\{\neg\phi(a_i;y):i\in J\}$ is satisfiable. Define $\psi(\x)$ as above, where $\overline{x}=(x_0,\ldots,x_{n-1})$, and choose some $r_0<\cdots<r_{n-1}<\omega$ such that $r_i\equiv 0\bmod 2\iff i\in I$. Then by assumption $\models\psi(a_{r_0},\ldots,a_{r_{n-1}})$, which implies that $\psi\in\EM(A)$, as $A$ is indiscernible. In particular we have $\models\psi(a_0,\ldots,a_{n-1})$, so $p$ is consistent as required.
+\end{proof}
+
+\section{NIP Theories}
+
+\ind We will now look at NIP in a wider setting, namely as a property of an entire theory.
+
+\begin{defn}[NIP theory]
+	An $\L$-theory $T$ is called \emph{NIP} if all $\L$-formulas $\phi(x;y)$ are NIP in $T$. Otherwise, $T$ is called \emph{IP}.
+\end{defn}
+
+\begin{rem}
+	So $T$ is IP if there is some $\L$-formula $\phi(x;y)$ and sequences $(a_i:i<\omega)$, $(b_S:S\subseteq\omega)$ in some $\M\models T$ such that $\M\models\phi(a_i;b_S)\iff i\in S$.
+\end{rem}
+
+\begin{exmp}
+	By \Cref{stable->nip}, all stable theories are NIP.
+\end{exmp}
+
+\begin{rem}
+	Shelah also introduced in \cite{nip og} the \emph{strict order property (SOP)} for formulas. SOP can be seen as an extension of OP (the order property) in a direction orthogonal to IP. In particular, a theory $T$ is stable if and only if it is NIP and no formula has SOP in $T$ (a proof of this can be found in the appendix). A related notion is the one of \emph{simple theories} (see \cite{simple}). Simple theories, like NIP, serve as another well behaved extension of stable theories, and one can show that no formula has SOP in a simple theory; it follows that a theory is stable if and only if it is simple and NIP.
+\end{rem}
+
+\ind We wish to simplify the process of determining whether a theory is NIP or not. First off, the following lemma is useful:
+
+\begin{lem}\label{boolean}
+	A Boolean combination of NIP formulas is NIP.
+\end{lem}
+
+\begin{proof}
+	Without loss of generality we may assume that all formulas are in the same variables, since if $\phi(x;y)$ is NIP, then so is $\phi(x;y)\wedge(z=z)$. By definition it follows immediately that $\phi$ is NIP if and only if $\neg\phi$ is NIP, so it remains only to prove the claim for conjunctions. But this follows easily from \Cref{nipendsegment}, since if for an indiscernible $(a_i:i\in I)$ and a tuple $b$ we have that the truth values of $\phi(a_i;b)$ and $\psi(a_i;b)$ are eventually constant, then the same holds for the truth value of $\theta(a_i;b):=\phi(a_i;b)\wedge\psi(a_i;b)$.
+\end{proof}
+
+\ind We can now use this to present an unstable example of an NIP theory.
+
+\begin{exmp}\label{DLOnip}
+	DLO is NIP. Indeed, by quantifier elimination, all formulas in DLO are equivalent to Boolean combinations of inequalities. But by \Cref{nipformex} (iii) and (iv) we know that $(x\leq y)$ is NIP in DLO, so we're done by \Cref{boolean}.
+\end{exmp}
+
+\begin{rem}
+	DLO belongs in the wider class of \emph{o-minimal} theories, which are the main topic of study in Chapter 2. As we will later see, all o-minimal theories are in fact NIP.
+\end{rem}
+
+\ind We will now prove a powerful result:
+
+\begin{prop}\label{nip|y|=1}
+	A theory $T$ is NIP if and only if all formulas $\phi(x;y)$ with $|x|=1$ are NIP.
+\end{prop}
+
+\ind The main argument used in the proof of \Cref{nip|y|=1} comes from the following lemma:
+
+\begin{lem}\label{|y|=n}
+	Let $T$ be a theory with $|T|=\kappa$ and $n<\omega$. Then the following are equivalent:
+	\begin{enumerate}[label=(\alph*)]
+		\item Every formula $\phi(x;y)$ with $|y|=n$ is NIP in $T$.
+		\item For any indiscernible sequence $(a_i:i<\kappa^+)$ and any $n$-tuple $b$, there exists $j<\kappa^+$ such that the sequence $(a_i:j<i<\kappa^{+})$ is $b$-indiscernible.
+	\end{enumerate}
+\end{lem}
+
+\begin{proof}
+	The direction $(b)\implies(a)$ is clear from \Cref{nipendsegment}. For $(a)\implies (b)$, fix some indiscernible $A=(a_i:i<\kappa^+)$ and some $n$-tuple $b$, and for $j <\kappa^+$ let $A_j=(a_i:j<i<\kappa^+)$. Suppose that $A_j$ is not $b$-indiscernible for any $j$, i.e.\ that for all $j$ there is a formula $\psi_j(\x;y)$ with $|y|=n$ such that $\psi_j,\neg\psi_j\not\in\EM_b(A_j)$. Since $\kappa^{+}>|T|$, there are $\kappa^{+}$ values of $j$ such that $\psi_j=\psi$ for some formula $\psi(\x;y)$, say with $|\x|=k$. Then for all $j$, there are increasing tuples $\a_j, \a'_j\in A^k_j$ such that $\models\psi(\a_j;b)\wedge\neg\psi(\a'_j;b)$. We inductively construct an indiscernible sequence $C=\{c_i:i<\omega\}$ which witnesses (along with $b$) that $\alt(\psi)=\infty$. Start by setting $c_0=\a_0$, and if $m_j$ denotes the maximal index which appears in $c_j$, continue by setting $c_1=\a'_{m_0}$, $c_2=\a_{m_1}$, $c_3=\a'_{m_2}$ and so on. It's easy now to see that $C$ has the desired properties, which gives a contradiction.
+\end{proof}
+
+\ind What remains of the proof of \Cref{nip|y|=1} is just an inductive argument. We continue using the notation from \Cref{|y|=n}.
+
+\begin{proof}[Proof of \Cref{nip|y|=1}]
+	We prove the non trivial direction. By \Cref{swap}, we can equivalently show that if all formulas $\phi(x;y)$ with $|y|=1$ are NIP, then $T$ is NIP. We do this by induction on $|y|$. By \Cref{|y|=n}, the induction step is equivalent to showing that if (b)$_t$ holds for $t\leq n$, then so does (b)$_{n+1}$. So assume (b)$_t$ for $t\leq n$ and let $b$ be an $n$-tuple, $b'=(b, b_{n+1})$ for some $b_{n+1}\in U$, and $A=(a_i:i<\kappa^{+})$ be an indiscernible sequence. By (b)$_1$, there is $j<\kappa^{+}$ such that $A_j$ is $b_{n+1}$-indiscernible. This means that for any $m<\omega$ and any two increasing tuples $(a_{r_1},\ldots,a_{r_m})$, $(a_{s_1},\ldots,a_{s_m})\in A^m_j$ we have:
+	\begin{equation*}
+		\begin{aligned}
+			(a_{r_1},\ldots,a_{r_m})                                        & \equiv_{b_{n+1}}(a_{s_1},\ldots,a_{s_m})                       \\
+			\implies\, \big((a_{r_1},b_{n+1}),\ldots,(a_{r_m},b_{n+1})\big) & \equiv \big((a_{s_1}, b_{n+1}),\ldots,(a_{s_m}, b_{n+1})\big).
+		\end{aligned}
+	\end{equation*}
+	So $A_j\tophat b_{n+1} :=\big((a_i,b_{n+1}):j<i<\kappa^+\big)$ is indiscernible. Then by (b)$_n$, there is $k>j$ such that $A_k\tophat b_{n+1}$ is $b$-indiscernible, hence $A_k$ is $b'$-indiscernible. This completes the proof.
+\end{proof}
+
+\newpage
+
+\chapter{O-Minimality}
+
+\ind In this chapter we define o-minimality and present some properties of definable sets and functions in o-minimal structures. Moreover, we show that the complete theory of an o-minimal structure is o-minimal, from which we can deduce that it is also NIP. We assume throughout that our language $\L$ includes at least a symbol $<$ (or $\leq$) which is interpreted as a linear order.
+
+\begin{notation} Let $\M$ be an $\L$-structure, $X\subseteq M^n$ be definable, and $A\subseteq M$.
+	\begin{itemize}
+		\item Unless otherwise stated, by \emph{interval} we mean a possibly unbounded open interval, i.e.\ a set of the form $(a,b):=\{x\in M: \M\models (a<x<b)\}$ for $a,b\in M\cup\{-\infty,\infty\}$.
+		\item $\Def_A(X)$ denotes the collection of $A$-definable subsets of $X$. If $A=M$, then we just write $\Def(X)$.
+	\end{itemize}
+\end{notation}
+
+\section{Definitions and Examples}
+
+\ind We start by defining o-minimality and giving some examples of o-minimal structures. We also mention some results which showcase that o-minimality imposes some tight restrictions on the algebraic properties of structures which have it.
+
+\begin{defn}[o-minimality]\label{omindef}
+	An $\L$-structure $\M$ is said to be \emph{o-minimal} if every definable subset of $M$ is a finite union of intervals and singletons. A theory $T$ is called \emph{o-minimal} if every $\M\models T$ is o-minimal.
+\end{defn}
+
+\begin{rem}
+	Note that given any language $\L=\{<,\ldots\}$ and a totally ordered $\L$-structure $\M$, $\Def(M)$ must include at least those subsets of $M$ which are defined by Boolean combinations of inequalities, which are exactly the finite unions of intervals and singletons on $M$. So the o-minimality condition requires that $\Def(M)$ is minimal, given that $(\M,<)$ is totally ordered. Compare with the definition of \emph{minimality}: $\M$ is minimal if every definable subset of $M$ is finite or cofinite (i.e.\ if $\Def(M)$ is minimal, given that $\L$ includes a symbol for equality).
+\end{rem}
+
+\ind It's easy to see that if $\M$ is o-minimal, then any expansion of $\M$ by a definable function or relation, and any reduct of $\M$ in a language which retains $<$ are also o-minimal. The latter observation is often used to generate examples of o-minimal structures, in the case when some expansion of theirs admits quantifier elimination.
+
+\begin{exmp}
+	The following structures are o-minimal:
+	\begin{enumerate}
+		\item a discrete linear order with or without endpoints, e.g.\ $(\Nat,<)$, $(\Z,<)$;
+		\item a dense linear order with or without endpoints, e.g.\ $(\Q,<)$;
+		\item a divisible ordered abelian group, e.g.\ $(\Q,<,+,0)$;
+		\item a real closed field, e.g.\ $(\R,<,+,\cdot,0,1)$.
+	\end{enumerate}
+\end{exmp}
+
+\begin{proof}
+	Note that all these structures have expansions which admit quantifier elimination:
+	\begin{enumerate}
+		\item after naming the endpoints and the successor function;
+		\item after naming the endpoints;
+		\item in $\L=\{<,+,-,0\}$ (see Chapter 3 in \cite{mt intro});
+		\item in $\L=\{<,+,-,\cdot,0,1\}$ (see Chapter 3 in \cite{mt intro}).
+	\end{enumerate}
+	By the above discussion, it suffices to check that atomic formulas define unions of intervals and singletons.
+\end{proof}
+
+\begin{rem}
+	In fact, it can be shown that every o-minimal ordered group must be divisible and abelian, and every o-minimal ordered ring must be a real closed field (see \cite{defI}).
+\end{rem}
+
+\begin{exmp}
+	The structure $\R_{\exp}:=(\R,<,+,-,\cdot,0,1,\exp)$, where $\exp$ denotes the usual exponential function on $\R$, is o-minimal. Unlike in the previous examples, $\Th(\R_{\exp})$ does not have quantifier elimination. Instead, o-minimality follows from Wilkie's proof that $\Th(\R_{\exp})$ is \emph{model complete}; that is, for every two models $\M$, $\N\models\Th(\R_{\exp})$ with $\M\subseteq\N$, we have in fact that $\M\preceq\N$ (see \cite{wilkie}).
+\end{exmp}
+
+\ind It is worth mentioning that in a certain sense, all possible examples of $\aleph_1$-saturated o-minimal structures are known. More precisely, given an $\aleph_1$-saturated o-minimal structure $\M$ and some $a\in M$, one of the following holds:
+\begin{enumerate}
+	\item $a$ is \emph{trivial}, i.e.\ there is no interval $I$ containing $a$ and no definable map $f:I\times I\to M$ which is strictly monotone in each variable (for example any point in a discrete o-minimal structure without endpoints is trivial, as the only definable maps in discrete o-minimal structures are precewise translations in one coordinate; see also Subsection 2.2.2);
+	\item there is some convex neighbourhood of $a$ on which $\M$ induces the structure of an ordered vector space over an ordered division ring;
+	\item there is an interval containing $a$ on which $\M$ induces the structure of an o-minimal expansion of a real closed field.
+\end{enumerate}
+This remarkable result is known as the \emph{trichotomy theorem}, proven by Peterzil and Starchenko in \cite{trichotomy}. Note that any such classification result can only be local, as it is possible to construct an o-minimal structure consisting of different parts with different local structure (e.g.\ one could put a copy of $\R_{\exp}$ in front of a copy of $\Q$, with a point in-between to ensure o-minimality).
+
+\section{Cell Decomposition \& Strong O-Minimality}
+
+\ind In Pillay and Steinhorn's first paper \cite{defI} on o-minimality, the following definition appears:
+
+\begin{defn*}
+	A theory $T$ is called strongly o-minimal if all $\M\models T$ are o-minimal.
+\end{defn*}
+
+This definition draws a possible distinction between o-minimality of a fixed structure $\M$, and (strong) o-minimality of $\Th(\M)$. Indeed, there is no obvious reason why given some o-minimal $\M$ and some $\N\equiv\M$, we should expect $\N$ to be o-minimal as well (cf.\ the case of minimality, in which the analogous statement fails).
+
+\ind Let's see what it is about this claim that could go wrong. Given an o-minimal structure $\M$, a formula $\phi(x;y)$ and a $|y|$-tuple $a$, we know by definition that $\phi(\M;a)$ is a union of $k_a$ disjoint intervals, for some $k_a\in \Nat$. Now suppose that $k_a$ is unbounded over all tuples $a$ in $M$. This means that if $\theta_k(y)$ is the $\L$-formula saying ``$\{x:\phi(x;y)\}$ is the union of at most $k$ intervals'', then for all $k\in \Nat$ we have $\M\models \exists y\,\neg\theta_k(y)$. Now a simple compactness argument shows that there is some $\N\models \Th(M)$ and a tuple $a\in N$ such that for all $k\in\Nat$ we have $\N\models\neg\theta_k(a)$, which implies that $\N$ is not o-minimal. Therefore, in order to pass from o-minimality to strong o-minimality, we need some sort of a ``uniform finiteness'' argument for the number of intervals each formula can define in $\M$. This is essentially a property concerning one dimensional ``fibres'' of $\phi(\M^{|y|+1})$, and can be established alongside some more general results on definable sets in dimensions higher than 1.
+
+\ind The goal of this section is twofold. We start by presenting the tool of cell decomposition, a cornerstone of the study of definable sets in $M^n$ for $n>1$, which was introduced by Pillay and Steinhorn in \cite{defII}, \cite{discrete} and \cite{defIII}. Cell decomposition is fundamental to any further study of o-minimality, and has a variety of analytical, algebraic and geometric applications. Our focus here (the second main point of the section) is its use in showing that the complete theory of an arbitrary o-minimal structure is (strongly) o-minimal; this powerful result was proved in \cite{defII} and \cite{defIII}. Consequently, the term ``strong o-minimality'' becomes obsolete, and we will not use it outside of this section (as it is not used in the recent literature either).
+
+\ind As already mentioned, the key step towards strong minimality is a uniform finiteness argument, which has a different form and proof according to whether the underlying order on $\M$ is dense or discrete. We will therefore treat these two cases separately. Our main focus will be the dense case, as it turns out that discrete o-minimal structures are not very interesting, in the sense that they do not admit any definable functions apart from piecewise translations in one coordinate.
+
+\ind Many of the arguments appearing in this section are highly technical, so while we will present most of the easier ones, some will be sketched or even omitted. Moreover, it is convenient only for the remaining of this section to view a formula $\phi(x;y)$ as $\phi^{-1}(y;x)$ instead (that is, to consider $x$ as a tuple of parameters, and $y$ as a tuple of free variables).
+
+
+\subsection{Dense O-Minimal Structures}
+
+\ind Throughout this subsection, a dense o-minimal structure $(\M,<,\ldots)$ without endpoints will be viewed as a topological space, equipped with its \emph{order topology}; that is, the topology formed by intervals. Similarly, $\M^n$ will be equipped with the induced product topology. It's easy to see that continuity of definable functions in this topology is a definable property, and the points at which a definable function is continuous form a definable set.
+
+\ind The aim is to describe the definable sets and functions in $M^n$ in terms of simpler sets and functions from a topological perspective. The motivation behind this effort can be found in the work of van den Dries on expansions $\Rns$ of $(\R,<,+,\cdot,0,1)$ \cite{vdr}. In particular, van den Dries shows that under the assumption that $\Th(\Rns)$ is of \emph{finite type}, i.e.\ (strongly) o-minimal in modern terms, then:
+\begin{itemize}
+	\item every definable set in $\R^n$ is the disjoint union of finitely many connected components, each homeomorphic to some $\R^k$;
+	\item every definable function $f:\R\to\R$ is piecewise continuous.
+\end{itemize}
+Having isolated the notion of o-minimality in \cite{defI}, Pillay and Steinhorn expand van den Dries' results to an arbitrary dense o-minimal structure $\M$ in \cite{defII}. As mentioned in the introduction of this chapter, not only is (strong) o-minimality of $\Th(\M)$ not assumed in their arguments, but in fact it follows directly from them.
+
+\ind It turns out however that in an arbitrary dense o-minimal structure, connectedness is too strong of a requirement for the basic components of definable sets. Consider for example an $\aleph_1$-saturated elementary extension $\Rns$ of $(\R,<,+,\cdot,0,1)$. Then the set of \emph{positive infinitesimals} $\Inf_+:=\bigcap_{n<\omega}(0,1/n]$ is non-empty in $R$. Moreover, it is open, as $\Inf_+=\bigcup_{\alpha\in\Inf_+}(0,\alpha)$. Thus, the interval $(0,\infty)=\Inf_+\cup\,\big((0,\infty)\backslash \Inf_+\big)$ is not connected in the interval topology (and similar constructions show that in fact no interval $I\subseteq R$ is connected). We therefore introduce the weaker notion of \emph{definable connectedness}:
+
+\begin{defn}[Definably connected set]
+	A definable set $X\subseteq M^n$ is called \emph{definably connected} if there are no non-empty definable open sets $U,\:V\subseteq M^n$ such that $X\subseteq U\cup V$.
+\end{defn}
+
+\begin{rem}\label{defconbound}
+	Given a definable set $Y\subseteq M^n$, let
+	\begin{align*}
+		\partial Y:=\big\{a\in M^n:\text{for every open box}\ B\subseteq M^n\ \text{with}\ a\in B\ \text{we have}\ B\cap Y\neq \emptyset,\ B\cap (M^n\backslash Y)\neq \emptyset\big\}
+	\end{align*}
+	be the \emph{boundary} of $Y$ (note that if $Y$ is $A$-definable, then so is $\partial Y$). It's easy to see that a set $X\subseteq M^n$ is definably connected if and only if for any non-trivial definable $Y\subseteq X$ we have $\partial Y\cap X\neq\emptyset$.
+\end{rem}
+
+\ind As we will soon see, by replacing connectedness with definable connectedness we get our desired decomposition results. We now introduce \emph{cells}, which are the basic definably connected sets, and our main objects of study for the rest of this subsection. The definition is inductive and rather long, so to simplify the language we use the following notation:
+
+\begin{notation}
+	Let $X\subseteq M$ be definable, and let $\infty/-\infty$ denote the constant ``function'' with value $\infty/-\infty$ on $X$ respectively.
+	\begin{itemize}
+		\item $\C(X) :=\{f:X\to M : f\ \text{is definable and continuous}\}$.
+		\item For $f\in \C(X)$, let $\Gamma(f):=\{(x,f(x)):x\in X\}$ (the \emph{graph} of $f$).
+		\item $\C_{\infty}(X) := \C(X)\cup\{\infty,-\infty\}$.
+		\item For $f,g\in \C_{\infty}(X)$ with $f<g$, let $(f,g)_X:=\{(x,y)\in M^{n+1}: x\in X,\: f(x) < y < g(x)\}$.
+	\end{itemize}
+\end{notation}
+
+\begin{defn}[Cell]\label{cell}
+	Let $n\geq 1$, $\varepsilon\in\{0,1\}^n$, $k=\sum_i \varepsilon_i$. We inductively define a \emph{$k$-cell} $C\subseteq M^n$ \emph{of type} $\varepsilon$ as follows.
+	\begin{itemize}
+		\item Suppose $n=1$, then:
+		      \begin{itemize}
+			      \item a $0$-cell $C$ (of type $0$) is defined as a singleton in $M$;
+			      \item an $1$-cell $C$ (of type $1$) is defined as a (possibly unbounded) open interval in $M$.
+		      \end{itemize}
+		\item Suppose $n>1$, and that $k$-cells have been defined in $M^{n-1}$ for all $k\leq n-1$. Write $\varepsilon=(\varepsilon_-,\varepsilon_n)$, where $\varepsilon_-\in\{0,1\}^{n-1}$. Then:
+		      \begin{itemize}
+			      \item if $\varepsilon_n=0$ (so $k<n$), define $C=\Gamma(f)$ for some $f\in \C(D)$, where $D\subseteq M^{n-1}$ is a $k$-cell of type $\varepsilon_-$;
+			      \item if $\varepsilon_n=1$, define $C=(f,g)_D$ for some $f,g\in \C_{\infty}(D)$ ($f<g$), where $D\subseteq M^n$ is a $(k-1)$-cell of type $\varepsilon_-$.
+		      \end{itemize}
+	\end{itemize}
+	A set $C\subseteq M^n$ is a \emph{cell} if it is a $k$-cell of type $\varepsilon$ for some $k$, $\varepsilon$.
+\end{defn}
+
+\begin{rem}\label{cellrem}\
+	\begin{enumerate}
+		\item It is standard to write either just $k$-cell or $\varepsilon$-cell for a $k$-cell of type $\varepsilon$. We choose the former convention, and will usually not mention the type of a cell.
+		\item It's clear by construction that cells are definable.
+		\item If $C\subseteq M^n$ is a $k$-cell, we also say that it is a cell of \emph{dimension} $k$.
+		\item A $k$-cell $C\subseteq M^n$ is open if and only if $k=n$; otherwise, $C$ has empty interior.
+		\item Given $\varepsilon\in\{0,1\}^n$ with $k=\sum_i\varepsilon_i$, let $P_\varepsilon :M^n\to M^k$ be the projection map at coordinates $i$ such that $\varepsilon_i=1$. Let also $v_i$ denote the $i$'th standard basis vector in $\{0,1\}^n$, and $u_m=\sum_i^m v_i$ for $m\leq n$. By construction, given a $k$-cell $C\subseteq M^n$, we have that $P_{v_i}(C)\subseteq M$ and $P_{u_m}(C)\subseteq M^m$ are also cells for all $i$ and $m$. The same is not true for general $P_\varepsilon$ (e.g.\ consider the $1$-cell $C=\{(x,0,x):x\in\R\}\subseteq\R^3$ and $\varepsilon=(0,1,1)$); however, if $C$ is of type $\varepsilon$, then $P_{\varepsilon}(C)\subseteq M^k$ is an (open) cell, homeomorphic to $C$ via $\restr{P_{\varepsilon}}{C}$. The proof of this statement is a simple inductive argument on $n$ (see e.g.\ Lemma 5.3 in \cite{neural1}).
+		\item Cells are indeed definably connected as claimed. This is shown by an inductive argument on $n$: the base case is clear by o-minimality, and the inductive step for $\dim C<n$ follows from the previous remark, while the case $\dim C = n$ uses \Cref{defconbound} (see \cite{defII}).
+	\end{enumerate}
+\end{rem}
+
+\begin{defn}[Decomposition]
+	Let $X\subseteq M^n$ be definable. A \emph{decomposition} of $X$ is a finite collection $\D$ of disjoint cells, the union of which is $X$. Given definable $X_1,\ldots,X_m\subseteq X$, we say a decomposition $\D$ of $X$ \emph{partitions} $X_1,\ldots,X_m$, if for every $X_i$ and every $D\in\D$ we have either $D\subseteq X_i$ or $X_i\cap D=\emptyset$.
+\end{defn}
+
+
+\ind We can now formally state the main results presented in this subsection. We start from:
+
+\begin{thm}[Cell decomposition theorem]\label{celldec}\
+	\begin{enumerate}
+		\item  If $X_1,\ldots,X_m\subseteq M^n$ are definable, then there is a decomposition of $M^n$ which partitions $X_1,\ldots,X_m$. In particular, if $X\subseteq M$ is definable, then it is the disjoint union of finitely many cells.
+		\item If $f:X\to M$ is definable for some $X\subseteq M^n$, then there is a decomposition $\D$ of $X$ such that $\restr{f}{D}$ is continuous for all $D\in\D$.
+	\end{enumerate}
+\end{thm}
+
+\begin{rem}\label{celldecrem}\
+	\begin{enumerate}
+		\item The literature includes various results which strengthen the cell decomposition theorem. For example, if we replace ``definable'' by ``$A$-definable'' for some $A\subseteq M$ in the above statements, then the cells in the corresponding decompositions can be taken to be $A$-definable as well. If on the other hand $\M$ is an expansion of an ordered field, then differentiation is definable in $\M$, and one can replace ``continuous'' by ``$k$-times differentiable'' (for $k\in\Nat$) in the definition of a cell, and the statement of the cell decomposition theorem (see e.g.\ \cite{tame}, Chapter 7, (3.2)). One can also ask that the definable sets and the resulting restricted functions are of a particular ``regular'' form (see e.g.\ \cite{tame}, Chapter 3, (2.19) for details). For our purposes, the original form of the theorem (first stated in \cite{defII}) will suffice.
+		\item Cell decomposition allows us to generalise the topological notion of dimension from \Cref{celldecrem} (iii) to any definable $X\subseteq M^n$, by setting
+		      \begin{equation*}
+			      \dim X:=\max\{\dim C: C\ \text{is a cell},\ C\subseteq X\}.
+		      \end{equation*}
+	\end{enumerate}
+\end{rem}
+
+\ind The case $n=1$ in \Cref{celldec} (ii) is of particular interest, and a fundamental step towards proving cell decomposition. For this reason it gets its own name, and will be dealt with separately:
+
+\begin{thm}[Monotonicity theorem]\label{mono}
+	Let $f:(a,b)\to M$ be $A$-definable, for some $(a,b)\subseteq M$. Then there are $A$-definable $a_1,\ldots,a_{n-1}$ with $a=a_0<a_1<\cdots<a_{n-1}<a_n=b$, such that for all $i<n$, the restriction $\restr{f}{(a_i,a_{i+1})}$ is either constant, or a monotone isomorphism between intervals.
+\end{thm}
+
+\begin{rem}\label{limits}\
+	\begin{enumerate}
+		\item A standard analytical argument shows that a definable version of the intermediate value theorem holds for dense o-minimal structures; namely, that continuous definable functions map intervals onto intervals. Hence, if $f:(a,b)\to M$ is a definable continuous injection, then it is necessarily monotone.
+		\item From the monotonicity theorem it easily follows that if $f:(a,b)\to M$ is definable, then both $\lim_{x\to a^+}f(x)$ and $\lim_{x\to b^-}f(x)$ exist in $M_{\infty}$.
+	\end{enumerate}
+\end{rem}
+
+\ind We will now outline the proof of the monotonicity theorem. The main argument comes from the following lemma:
+
+\begin{lem}\label{monolem}
+	Let $I\subseteq M$ be an interval and $f:I\to M$ be $A$-definable, then:
+	\begin{enumerate}
+		\item there is an $A$-definable interval $I_0\subseteq I$ on which $f$ is either constant or injective;
+		\item if $\restr{f}{I_0}$ is injective, then there is an $A$-definable interval $I_1\subseteq I_0$ on which $f$ is strictly monotone;
+		\item if $\restr{f}{I_0}$ is injective, then there is an $A$-definable interval $I_2\subseteq I_0$ on which $f$ is strictly monotone and continuous.
+	\end{enumerate}
+\end{lem}
+
+\begin{proof}[Proof (Sketch)]\
+	\begin{enumerate}[itemsep=12pt]
+		\item If $f$ is constant on any interval $I_0\subseteq I$, then it is easy to check that $I_0$ can be taken to be $A$-definable. Otherwise, $f(I)$ is necessarily infinite, so by o-minimality it contains an $A$-definable interval $J$. Let $g:J\to I$ be given by $g(y)=\min\{x\in I: f(x)=y\}$. Then $g$ is $A$-definable and injective, so $g(J)$ is infinite, and by construction $f$ is injective on an $A$-definable $I_0\subseteq g(J)$.
+
+		\item We omit this proof, as it is quite technical and essentially boils down to checking various cases of local monotonic behaviour of $f$. For details see \cite{tame}, Chapter 3, (1.5).
+
+		\item By (i) and (ii), there is $I_1\subseteq I$ on which $f$ is injective and strictly monotone (increasing say, without loss of generality). So $f(I_1)$ is infinite, and therefore there is an $A$-definable interval $J\subseteq f(I_1)$. Then for any $(c,d)\subseteq J$ we have $f^{-1}((c,d))=(f^{-1}(c),f^{-1}(d))$, i.e.\ $f$ is continuous on $f^{-1}(J)$, so there is an $A$-definable interval $I_2\subseteq f^{-1}(J)\subseteq I_1$ on which $f$ is continuous.
+	\end{enumerate}
+\end{proof}
+
+\ind The rest of the proof is broken down into the following steps:
+
+\begin{proof}[Proof of \Cref{mono} (Sketch)]
+	Let:
+	\begin{alignat*}{2}
+		 & X_0 &  & := \{x\in(a,b):f\ \text{is constant on a neighbourhood of}\ x\}                           \\
+		 & X_+ &  & := \{x\in(a,b):f\ \text{is strictly increasing and continuous on a neighbourhood of}\ x\} \\
+		 & X_- &  & := \{x\in(a,b):f\ \text{is strictly decreasing and continuous on a neighbourhood of}\ x\} \\
+		 & X   &  & := X_0\cup X_+\cup X_-
+	\end{alignat*}
+
+	\begin{claim}{1}
+		$X_0$, $X_+$ and $X_-$ are $A$-definable, open and pairwise disjoint.
+	\end{claim}
+
+	\begin{subproof}[Proof of Claim 1]
+		Easy.
+	\end{subproof}
+
+	\begin{claim}{2}
+		$Y:=(a,b)\backslash X$ is finite.
+	\end{claim}
+
+	\begin{subproof}[Proof of Claim 2]
+		Otherwise, there is some interval $J\subseteq Y$. Then, by \Cref{monolem}, $J$ contains an interval $I_2$ on which $f$ is constant or strictly monotone and continuous, contradicting the definition of $X$.
+	\end{subproof}
+
+	Now let $Y=\{a_1,\ldots,a_{n-1}\}$, so that $a=a_0<a_1<\cdots<a_{n-1}<a_n=b$.
+
+	\begin{claim}{3}
+		For all $i<n$, the interval $(a_i,a_{i+1})$ is contained in one of $X_0$, $X_+$ or $X_-$.
+	\end{claim}
+
+	\begin{subproof}[Proof of Claim 3]
+		$(a_i,a_{i+1})$ is definably connected.
+	\end{subproof}
+
+	\begin{claim}{4}
+		If $(a_i,a_{i+1})$ is contained in $X_0$/$X_+$/$X_-$, then $f$ is respectively constant/strictly increasing and continuous/strictly decreasing and continuous on $(a_i,a_{i+1})$.
+	\end{claim}
+
+	\begin{subproof}
+		This is an easy check: e.g.\ if $(a_i,a_{i+1})\subseteq X_0$, then we fix some $x_0\in(a_i,a_{i+1})$ and show that:
+		\begin{align*}
+			\sup\{x\in(x_0,a_{i+1}):f\ \text{is constant on}\ [x_0,x)\} & =a_{i+1}; \\
+			\inf\{x\in(a_i,x_0):f\ \text{is constant on}\ (x,x_0]\}     & =a_i.
+		\end{align*}
+	\end{subproof}
+
+	The result now follows by combining the above.
+\end{proof}
+
+\ind Finally, we state the uniform finiteness criterion that we need. First, we need to define what uniform finiteness means precisely:
+
+\begin{defn}[Finite/uniformly finite formula]
+	Let $X\subseteq M^n$. A formula $\phi(x;y)$ with $|x|=n$, $|y|=1$ is called:
+	\begin{itemize}
+		\item \emph{finite} over $X$, if for all $a\in X$ we have that $\phi(a;\M)$ is finite;
+		\item \emph{uniformly finite} over $X$, if there is $K\in\Nat$ such that for all $a\in X$ we have $|\phi(a;\M)|\leq K$.
+	\end{itemize}
+\end{defn}
+
+\begin{thm}[Uniform finiteness property]\label{unifinite}
+	If $\phi(x;y)$ is finite over $M^n$, then it is uniformly finite over $M^n$.
+\end{thm}
+
+\ind As promised, one can now easily deduce that a dense o-minimal structure without endpoints has a (strongly) o-minimal theory.
+
+\begin{thm}\label{strongdense}
+	Let $\M$ be a dense o-minimal structure without endpoints. Then $\Th(\M)$ is o-minimal.
+\end{thm}
+
+\begin{proof}
+	Given a formula $\phi(x;y)$, let
+	\begin{equation*}
+		\psi(x;z):= ``z\ \text{is a boundary point of}\ \{y:\phi(x;y)\}".
+	\end{equation*}
+	Now $\psi$ is finite over $M^n$ by o-minimality, hence uniformly finite over $M^n$ by \Cref{unifinite}. This means that for some $K\in\Nat$ we have:
+	\begin{equation*}
+		\Th(\M) \models \forall x\,\big(|\{z:\psi(x;z)\}|\leq K\big).
+	\end{equation*}
+	So for any $\N\models\Th(\M)$ and any $a\in N^n$ the set $\phi(a;\N)$ has at most $K$ boundary points, i.e.\ it is a finite union of intervals and singletons. The result now follows.
+\end{proof}
+
+\begin{rem}
+	Using cell decomposition and \Cref{strongdense}, one can in fact deduce that for any formula $\phi(x;y)$ with $|x|=n$, $|y|=m\geq 1$, there is some $K\in\Nat$ such that for any $a\in M^n$, the set $\phi(a;\M^m)$ is the union of at most $K$ cells. This appears as Theorem 0.3 (a) in \cite{defII}.
+\end{rem}
+
+\ind Both cell decomposition and uniform finiteness arise as special cases of a more general result, which replaces $M^n$ with any cell $C\subseteq M^n$.
+
+\begin{restatable}[]{lem}{celldeclem}\label{celldeclem}
+	Let $C\subseteq M^n$ be a cell.
+	\begin{enumerate}
+		\item If $X_1,\ldots,X_m\subseteq C$ are definable, then there is a decomposition of $C$ which partitions $X_1,\ldots,X_m$.
+		\item If $f:C\to M$ is definable, then there is a decomposition $\D$ of $C$ such that $\restr{f}{D}$ is continuous for all $D\in\D$.
+		\item If $\phi(x;y)$ ($|x|=n$, $|y|=1$) is finite over $C$, then it is uniformly finite over $C$.
+	\end{enumerate}
+\end{restatable}
+
+\ind Now assuming \Cref{celldeclem}, we get:
+
+\begin{proof}[Proof of \Cref{celldec} and \Cref{unifinite}]\
+	\begin{itemize}
+		\item (\ref{celldec}) (i): This is just (\ref{celldeclem}) (i) for $C=M^n$.
+		\item (\ref{celldec}) (ii): Apply (\ref{celldeclem}) (ii) to the cells in a decomposition of $X$ given by (\ref{celldec}) (i).
+		\item (\ref{unifinite}): Apply (\ref{celldeclem}) (iii) for $C=M^n$.
+	\end{itemize}
+\end{proof}
+
+\ind \Cref{celldeclem} is proved via a quite long and complicated inductive argument, an outline of which can be found in the appendix.
+
+\subsection{Discrete O-Minimal Structures}
+
+\ind We now turn our attention to the case of a discrete o-minimal structure $(\M,<,\ldots)$. As mentioned in the beginning of the section, this case has a few key differences with the dense case, and so it requires a different approach. For one, all the definitions and arguments of the previous subsection make extensive use of topological notions such as continuity and definable connectedness. However, the order topology on a discrete $\M$ reduces to just the discrete topology, in which no sets are definably connected and all functions are continuous. Thus we cannot expect to deduce any useful results from a topological perspective. Moreover, uniform finiteness as stated in \Cref{unifinite} completely fails for discrete structures; e.g.\ the formula $\phi(x_1,x_2;y):=(x_1<y<x_2)$ defines arbitrarily large finite intervals in an infinite discrete linear order.
+
+\ind Nevertheless, one can still establish results such as cell decomposition in the discrete case. Also, the proof that discrete o-minimal structures have (strongly) o-minimal theories uses essentially the same idea. Observe that in the proof of \Cref{strongdense} what we really needed was not that any finite formula is uniformly finite, but rather that any formula defining the endpoints of finitely many intervals is uniformly finite.
+
+\begin{notation}
+	Let $S$ and $P$ denote the successor and predecessor functions on $M$ respectively. Given $\a=(a_1,\ldots,a_n)\in M^n$ and $i\leq n$, denote $S_i(a):=(a_1,\ldots,a_{i-1},S(a),a_{i+1},\ldots,a_n)$.
+\end{notation}
+
+\begin{defn}[Scattered]
+	A set $X\subseteq M$ is called \emph{scattered} if $a\in X\implies S(a),P(a)\not\in X$. A formula $\phi(x;y)$ with $|x|=n$, $|y|=1$ is called \emph{scattered} if for all $a\in M^n$ the set $\phi(a;\M)$ is scattered.
+\end{defn}
+
+\ind Note that by o-minimality, for any formula $\phi(x;y)$ the formula
+\begin{equation*}
+	\psi(x;z):=``z\ \text{is a boundary point of}\ \{y:\phi(x;y)\}"
+\end{equation*}
+is scattered. In general, o-minimality ensures that scattered formulas are finite over $M^n$. Uniform finiteness then takes the form:
+
+\begin{lem}\label{unifinitediscrete}
+	If $\phi(x;y)$ ($|x|=n$, $|y|=1$) is scattered, then it is uniformly finite.
+\end{lem}
+
+\ind \Cref{unifinitediscrete} is proved in \cite{defIII} via a long inductive argument, which we omit. Unlike the corresponding claim in \Cref{celldeclem}, this result is proved directly and not alongside cell decomposition. Now the same proof as in \Cref{strongdense} gives:
+
+\begin{cor}
+	Let $\M$ be a discrete o-minimal structure. Then $\Th(\M)$ is o-minimal.
+\end{cor}
+
+\ind For the sake of completeness, we finish this subsection by showing what cell decomposition looks like for discrete o-minimal structures. Since we don't have a useful notion of continuity in the discrete case, the ``nice'' definable functions take the form of translations in one coordinate.
+
+\begin{defn}
+	Let $X\subseteq M^n$ and $i\leq n$. A function $f:X\to M$ is called a \emph{translation} in the $i$'th coordinate if:
+	\begin{itemize}
+		\item for all $\a=(a_1,\ldots,a_n)$, $\b=(b_1,\ldots,b_n)$ in $X$ we have $a_i=b_i\implies f(\a)=f(\b)$;
+		\item if $Y=\{\a\in X:S_i(\a)\in X\}$, then we have either $f(S_i(\a))=S(f(\a))$ for all $\a\in Y$ (in which case $f$ is said to be \emph{order preserving}), or $f(S_i(\a))=P(f(\a))$ for all $\a\in Y$ (in which case $f$ is said to be \emph{order reversing}).
+	\end{itemize}
+\end{defn}
+
+\ind Now one can define cells similarly as in (\ref{cell}); the discrete definition differs only in that an 1-cell in $M$ is defined as an \emph{infinite} open interval instead of any open interval (a distinction which is not needed in the dense case, as all open intervals are infinite), and that instead of continuous functions we use constant functions or translations to define cells in higher dimensions (where $\infty,-\infty$ are still considered constant ``functions''). Then, cell decomposition takes the form:
+
+\begin{thm}[Cell decomposition theorem]\label{celldecdiscrete}\
+	\begin{enumerate}
+		\item  If $X_1,\ldots,X_m\subseteq M^n$ are definable, then there is a decomposition of $M^n$ which partitions $X_1,\ldots,X_m$. In particular, if $X\subseteq M$ is definable, then it is the disjoint union of finitely many cells.
+		\item If $f:X\to M$ is definable for some $X\subseteq M^n$, then there is a decomposition $\D$ of $X$ such that $\restr{f}{D}$ is constant or a translation for all $D\in\D$.
+	\end{enumerate}
+\end{thm}
+
+\begin{rem}
+	In fact the translations in (ii) can be taken to be definable over $\emptyset$, regardless of whether $f$ is defined with parameters or not. This appears as Theorem 3.4 in \cite{discrete}.
+\end{rem}
+
+\ind So the only difference with the dense case is in (ii). Cell decomposition was first proved in \cite{discrete} for models of a (strongly) o-minimal theory $T$, by an induction argument over all $\M\models T$. \Cref{unifinitediscrete} later extended the result to all discrete o-minimal structures.
+
+\ind It's easy to show that if $I\subseteq M$ is an interval and $f:I\to M$ is a definable (unary) translation, then $f(I)$ is an interval and $f:I\to f(I)$ is a monotone bijection. So (ii)$_1$ gives the following version of the monotonicity theorem:
+
+\begin{thm}[Monotonicity theorem]\label{monod}
+	Let $f:(a,b)\to M$ be $A$-definable for some $(a,b)\subseteq M$. Then there are $A$-definable $a=a_0<a_1<\cdots<a_n=b$ such that for all $i<n$, the restriction $\restr{f}{(a_i,a_{i+1})}$ is either constant, or a monotone bijection between intervals.
+\end{thm}
+
+\ind In fact, this discrete version of the monotonicity theorem holds in arbitrary o-minimal structures (see Theorem 4.2 in \cite{defI}). The monotonicity theorem can be used to show the following result (Theorems 3.1 and 3.3 in \cite{discrete}):
+
+\begin{thm}
+	There is no o-minimal expansion of $(\omega,<)$ and $(\Z,<,-(\cdot))$ by a non-definable function or relation.
+\end{thm}
+
+\ind Here, $-(\cdot)$ denotes the unary function $x\mapsto -x$ on $\Z$. This result cannot be generalised to all discrete o-minimal structures, as in fact one can construct elementary extensions of $(\omega,<)$ and $(\Z,<,-(\cdot))$ that do have o-minimal expansions. However, given (\ref{celldecdiscrete}) (ii), any definable function in these expansions is still locally constant or a translation, so we can't hope to generate any interesting discrete structures by expanding.
+
+\subsection{Strong O-Minimality for Arbitrary Structures}
+
+\ind We can finally put the results of the previous two subsections together and deduce that any o-minimal structure $\M$ has a (strongly) o-minimal theory. As was the case for dense and discrete o-minimal structures, this result is an easy corollary of the following:
+
+\begin{lem}\label{mixed1}
+	Let $\M$ be o-minimal. Then for any $\L$-formula $\phi(x;y)$ (where $|x|=n$, $|y|=1$), there is $K\in\Nat$ such that for all $b\in M^n$, $\phi(b;\M)$ consists of at most $K$ intervals and singletons.
+\end{lem}
+
+\ind Let's see what we know already, and what more we need to know in order to prove this lemma. Consider an arbitrary o-minimal structure $\M$ and let:
+\begin{alignat*}{2}
+	c(M) & := \{ &  & x\in M: \exists\, a < x < b\ \text{such that} < \text{induces a dense linear order} \\ & &&\text{without endpoints on}\ (a,b)\};\\
+	d(M) & :=    &  & \!\! M - c(M).
+\end{alignat*}
+Let $c(\M)$, $d(\M)$ be the induced substructures. Now note that $c(M)$, $d(M)$ are $\emptyset$-definable in $\M$ (say by formulas $\gamma(x)$, $\delta(x):=\neg\,\gamma(x)$ respectively), hence by o-minimality we have:
+\begin{itemize}
+	\item either $c(M)$ is empty, or $c(M)=\bigcup_{i=1}^n I_i$ for some $n\in\Nat$, where the $I_i$ are disjoint $\emptyset$-definable open intervals, on each of which $<$ induces a dense linear order without endpoints;
+	\item either $d(M)$ is empty, or $d(M)=\bigcup_{i=1}^m J_i$ for some $m\in\Nat$, where the $J_i$ are disjoint (possibly finite) $\emptyset$-definable intervals, on each of which for all but finitely many $a\in J_i$ we have $S(a),P(a)\in J_i$.
+\end{itemize}
+It's easy to see that $c(\M)$ is a dense o-minimal structure, on which we can apply uniform boundedness. In particular, this means:
+\begin{claim}{1}
+	For any $\L$-formula $\phi(x;y)$ ($|x|=n$, $|y|=1$) there is $K\in\Nat$ such that for any $b\in c(M)^n$, $\phi(b;\M)\cap c(\M)$ is the union of at most $K$ intervals and singletons.
+\end{claim}
+Now $d(\M)$ is not a discrete order in the usual sense. However it is still o-minimal, and after some easy modifications the results of the previous subsection generalise to give:
+\begin{claim}{2}
+	For any $\L$-formula $\phi(x;y)$ ($|x|=n$, $|y|=1$) there is $K\in\Nat$ such that for any $b\in d(M)^n$, $\phi(b;\M)\cap d(\M)$ is the union of at most $K$ intervals and singletons.
+\end{claim}
+
+\ind So thus far we only know about finite boundedness within $c(\M)$ and $d(\M)$, but we don't know whether the number of intervals in $\phi(b;\M)$ is bounded as $b$ ranges over all of $M$. As it turns out however, we can actually reduce the general case to the cases of $c(\M)$ and $d(\M)$. The two substructures are completely separate, in the sense that using parameters from one does not define any new subsets of the other.
+
+\ind More precisely, from now on consider $\L$ as a 2-sorted language $\L'$ and let the variable tuples $x$, $y$ take values in $c(M)$ and $d(M)$ respectively. To show that the number of intervals in $\phi(b;\M)$ is bounded as $b$ ranges over $\M$ for all $\L$-formulas $\phi(x;y)$, it clearly suffices to show the same for all $\phi(b_1,b_2;\M)$, where $b_1$, $b_2$ range over $c(M)$ and $d(M)$ respectively, and $\phi(x,y;z)$ is an $\L'$-formula. We deduce this from the following result, which appears in a slightly stronger form as Lemma 2.5 in \cite{defIII}:
+
+\begin{lem}\label{mixed2}
+	Given an $\L'$-formula $\phi(x,y)$ ($|x|=n$, $|y|=m$) there is an $\emptyset$-definable decomposition $\D$ of $c(M)^n$ such that for each $D\in\D$, if $a_1,a_2\in D$ and $b\in d(M)^m$, then $\M\models(\phi(a_1,b)\siff\phi(a_2,b))$.
+\end{lem}
+
+\ind We now get:
+
+\begin{cor}\label{mixed3}
+	For any $\L'$-formula $\phi(x,y)$ there is a formula $\psi(x,y)$ which is a Boolean combination of formulas $\eta(x)$ and $\theta(y)$, such that $\M\models(\phi(x,y)\siff\psi(x,y))$.
+\end{cor}
+
+\begin{proof}
+	Let $\D=\{D_1,\ldots,D_s\}$ be a decomposition of $c(M)^n$ as in (\ref{mixed2}), and for $i=1,\ldots,s$, let $\eta_i(x)$ define $D_i$, and $\theta_i(y):=\exists x(\eta_i(x)\wedge\phi(x,y))$. Then by (\ref{mixed2}) we have:
+	\begin{equation*}
+		\M\models\bigg(\phi(x,y)\siff\bigvee_{i=1}^s\eta_i(x)\wedge\theta_i(y)\bigg).
+	\end{equation*}
+\end{proof}
+
+\ind Now we prove \Cref{mixed1}:
+
+\begin{proof}[Proof of \Cref{mixed1}]
+	Given an $\L'$-formula $\phi(x,y;z)$ ($|x|=n$, $|y|=m$), we have:
+	\begin{equation*}
+		\M\models\big(\phi(x,y;z) \siff (\phi(x,y;z)\wedge\gamma(z))\vee(\phi(x,y;z)\wedge\delta(z))\big).
+	\end{equation*}
+	Now consider the formula $\psi_1(x,y;z):=\phi(x,y;z)\wedge\gamma(z)$, where the tuples $x\tophat z$, $y$ take values in $c(M)$ and $d(M)$ respectively. By \Cref{mixed3}, there are formulas $\eta_i(x; z)$, $\theta_i(y)$ ($i=1,\ldots,s$) such that:
+	\begin{equation*}
+		\M\models\bigg(\psi_1(x,y;z) \siff \bigvee_{i=1}^s\eta_i(x; z)\wedge\theta_i(y)\bigg).
+	\end{equation*}
+	Let $b=(b_1,b_2)$ range over $M$, where $b_1\in c(M)^n$, $b_2\in d(M)^m$. By Claim 1, for all $i$ there is $K_i\in\Nat$ such that $\eta_i(b_1;\M)$ is the union of at most $K_i$ intervals and singletons. Hence $\psi_1(b_1,b_2;\M)$ is the union of at most $K=\max_i K_i$ intervals and singletons. A similar argument shows the same for $\psi_2(x,y;z):=\phi(x,y;z)\wedge\delta(z)$ (this time with $x$, $y\tophat z$ taking values in $c(M)$ and $d(M)$ respectively). The result now follows.
+\end{proof}
+
+\ind We finally deduce:
+
+\begin{cor}\label{mixedstrong}
+	Let $\M$ be any o-minimal structure, then $\Th(\M)$ is (strongly) o-minimal.
+\end{cor}
+
+\section{O-Minimality \& NIP}
+
+\ind We finish this chapter by proving that the complete theory $\Th(\M)$ of an o-minimal structure $\M$ is NIP.
+
+\begin{thm}\label{NIP omin}
+	Let $\M$ be an o-minimal structure. Then $\Th(\M)$ is NIP.
+\end{thm}
+
+\begin{proof}
+	Let $\U\models \Th(\M)$ be a sufficiently saturated monster model. By \Cref{mixedstrong}, $\Th(\M)$ is o-minimal, hence so is $\U$. Suppose $\Th(\M)$ has IP, then by \Cref{nip|y|=1} there is a formula $\phi(x;y)$ with $|x|=1$ which has IP. By \Cref{ipalt} we have $\alt(\phi)=\infty$, as witnessed by an indiscernible sequence $A=(a_i:i<\omega)$ and a $|y|$-tuple $b$ in $\U$. By o-minimality of $\U$, there is a formula $\psi(x;y)$ which is a Boolean combination of inequalities, and a tuple $c$ in $\U$ such that $\U\models(\phi(x;b)\siff\psi(x;c))$. But then $A$ and $c$ witness that $\alt(\psi)=\infty$, which is a contradiction by \Cref{boolean} and \Cref{nipformex} (iii), (iv).
+\end{proof}
+
+\newpage
+
+\chapter{Pillay's Conjecture}
+
+\ind Since the birth of o-minimality as a concept, the study of groups definable in o-minimal structures has been a topic of particular interest. In one of the earliest works which showcased the rich structure of such groups, Pillay \cite{groups def omin} proved that a group $G$ definable in a (sufficiently saturated) dense o-minimal structure $\M$ can be equipped with a definable ``manifold structure'' over $M$. More precisely, there is a unique definable topology on $G$ (called the \emph{group topology}) in which the operations $\cdot$ and $x\mapsto x^{-1}$ are continuous, making $G$ into a topological group. Moreover, $G$ can be covered by finitely many open sets, each (definably) homeomorphic to an open subset of $M^n$ for some fixed $n$ (the \emph{dimension} of $G$). If in addition the underlying order of $\M$ is $(\R,<)$, then $G$ becomes a Lie group (i.e.\ a group which is also a real manifold).
+
+\ind Various other results concerning groups definable in o-minimal structures were discovered over the years (see e.g.\ the survey \cite{survey1}, or the more recent \cite{survey2}). An important development, which broadened the scope of research in this area, was Pillay's idea to study quotients of definable groups with \emph{type-definable} (i.e.\ definable by collections of formulas) subgroups of \emph{bounded index}. In particular, Pillay conjectured that every group $G$ definable in some (sufficiently saturated) o-minimal structure has a type-definable ``group of infinitesimals" $G^{00}$, and that the quotient group $G/G^{00}$ admits a topology which makes it into a compact Lie group, whose dimension is (under a \emph{definable compactness} assumption for $G$) equal to the one of $G$. This is quite an impressive statement, as it suggests that every definable group $G\subseteq M$ can be seen as a ``non-standard'' version of a Lie group, when $\Th(\M)$ might not even have any models of order type $(\R,<)$.
+
+\ind Pillay's conjecture was eventually proved for an arbitrary o-minimal structure $\M$. The proof is split into several papers, each dealing with special cases and building upon previous work. Here we are interested in the case where $\M$ expands a real closed field, in the proof of which the previously unutilised connection between o-minimality and NIP found an application \cite{groups measures nip}. A crucial tool used in this proof is the notion of \emph{Keisler measures}, introduced by Keisler in \cite{keisler}. Keisler measures can be seen as a generalisation of complete types, and they help extend certain properties of stable theories to the wider class of NIP theories.
+
+\ind The goal of this chapter is to introduce the basic notions involved in Pillay's conjecture, and some of the ingredients of its proof in the aforementioned case. The actual proof is highly involved and lies beyond the scope of this essay; we aim merely to highlight the connection between o-minimality and NIP, which has provided a new, pure model theoretic approach to some fundamentally algebraic/geometric questions in o-minimality.
+
+\section{Preliminaries}
+
+\ind Before we can further discuss Pillay's conjecture, we need to go through some preliminary definitions and results. Throughout this section we assume that $\M$ is a $\kappa$-saturated o-minimal structure, for some large $\kappa$. If $A\subseteq M$ has size strictly less than $\kappa$, we call $A$ a \emph{small} subset of $M$.
+
+\subsection{Dimension}
+
+\ind We first introduce an algebraic/geometric notion of dimension for definable sets in o-minimal structures. For $A\subseteq M$, let $\dcl(A):=\{b\in M: \{b\}\in\Def_A(M)\}$ be the \emph{definable closure} of $A$. Note that since $\M$ is an ordered structure, $\dcl(A)=\acl(A)$, where $\acl(A):=\{b\in M: b\in X\ \text{for some finite}\ X\in\Def_A(M)\}$ is the \emph{algebraic closure} of $A$. The \emph{finitary closure operator} (see \cite{ominandvariations}) $\dcl=\acl$ satisfies:
+
+\begin{lem}[Exchange property]\label{exchange}
+	Let $A\subseteq M$ and $a,b\in M$. If $b\in\dcl(A\cup a)\backslash\dcl(A)$, then $a\in\dcl(A\cup b)$.
+\end{lem}
+
+\begin{proof}
+	Since $b\in\dcl(A\cup a)\backslash\dcl(A)$, there is an $A$-definable function $f:X\to M$ with $a\in X\subseteq A\cup a$ such that $f(a)=b$. Applying the monotonicity theorem on $f$ and the fact that $a\not\in\dcl(A)$, we get that $a\in I$ for some $A$-definable interval $I\subseteq X$ on which $f$ is strictly monotone. But then if $J:=f(I)$, the function $g:J\to I$, $g:=(\restr{f}{J})^{-1}$ is $A$-definable, and $g(b)=a$; this means that $a\in\dcl(A\cup b)$.
+\end{proof}
+
+\ind Let us now define:
+
+\begin{defn}[Dimension]\
+	\begin{enumerate}
+		\item Let $A\subseteq M$ and $a\in M^n$. We set
+		      \begin{equation*}
+			      \dim(a/A):=\min\big\{|b|:b\subseteq a,\,a\subseteq \dcl(A\cup b)\big\}.
+		      \end{equation*}
+		\item Let $A\subseteq M$ be small and $X\subseteq M^n$ be $A$-definable. We set
+		      \begin{equation*}
+			      \dim X=\max\{\dim(a/A):a\in X\}.
+		      \end{equation*}
+	\end{enumerate}
+\end{defn}
+
+\begin{rem}\
+	\begin{enumerate}
+		\item The reason we ask for $\M$ to be $\kappa$-saturated and $|A|<\kappa$ is to ensure that a tuple $a$ realising $\dim X$ is actually in $M$. Otherwise there could be ambiguity, as $\dim \phi(\N)$ (where $\phi$ is the $\L_A$-formula defining $X$ in $\M$) could increase when considered in a saturated $\N\succeq\M$. One could get rid of the saturation assumption by defining instead:
+		      \begin{equation*}
+			      \dim X=\max\{\dim(a/A): \N\models\phi(a)\ \text{for some}\ \N\succeq\M\}.
+		      \end{equation*}
+		\item This definition is a special case of a general definition of dimension which is valid in the wider class of \emph{geometric} structures (see paragraph 2.2 in \cite{ominandvariations}).
+	\end{enumerate}
+\end{rem}
+
+\ind The exchange principle ensures that this notion of dimension is reasonable. For example, it is related in a natural way to the notion of \emph{algebraic independence}:
+
+\begin{defn}[Algebraically independent]
+	A tuple $b=(b_1,\ldots,b_n)\in M^n$ is called \emph{algebraically independent} over a set $A\subseteq M$ if for all $i=1,\ldots,n$ we have $b_i\not\in\dcl\big(A\cup(b\backslash b_i)\big)$.
+\end{defn}
+
+\begin{restatable}[]{lem}{dimlem}\label{dimlem}
+	For $A\subseteq M$, $a\in M^n$, let
+	\begin{equation*}
+		\aind(a/A) := \max\{|b|:b\subseteq a,\, b\ \text{is algebraically independent over}\ A\}.
+	\end{equation*}
+	Then $\dim(a/A)=\aind(a/A)$.
+\end{restatable}
+
+\ind We give a proof of (\ref{dimlem}) in the appendix. Dimension satisfies several other intuitive properties, such as:
+\begin{enumerate}
+	\item if $A\subseteq B$, then $\dim(a/A)\geq\dim(a/B)$;
+	\item $\dim(a\cup b/A)=\dim(a/A\cup b)+\dim(b/A)$;
+	\item $\dim(X/A)$ is independent of $A$ (as long as $|A|<\kappa$);
+	\item if $X,Y\subseteq M$ are definable, then $\dim(X\cup Y)=\max\{\dim(X),\dim(Y)\}$;
+	\item if $f:X\to M^m$ is a definable injection, then $\dim(f(X))=\dim(X)$ (for general definable $f$ we have $\dim(f(X))\leq\dim(X)$).
+\end{enumerate}
+These properties, along with others, can be found in \cite{ominandvariations} and \cite{groups def omin}. It's easy also to show that in dense o-minimal structures without endpoints, the geometric notion of dimension agrees with the topological one (defined in \Cref{celldecrem} (ii)).
+
+\subsection{(Type-)Definable Groups}
+
+\ind We now formally define the objects of interest involved in Pillay's conjecture.
+
+\begin{defn}[Definable/type-definable group] Let $A\subseteq M$ be small.
+	\begin{enumerate}
+		\item An $A$-definable set $G\subseteq M^n$ is called an $A$-\emph{definable group in} $\M$ if there is an $A$-definable operation $\cdot:G\times G\to G$ making $G$ into a group.
+		\item A set $X\subseteq M^n$ is called $A$-\emph{type-definable} if $X=\bigcap_{i\in I}\phi_i(\M)$ for a collection of $\L_A$-formulas $\{\phi_i:i\in I\}$, where $|I|<\kappa$. A set $G\subseteq M^n$ is called an $A$-\emph{type-definable group} if it is $A$-type-definable, and equipped with an $A$-definable group operation.
+	\end{enumerate}
+\end{defn}
+
+\ind As usual, if $A=M$ above, it is omitted. It's worth noting that while our focus is on definable groups $G\subseteq M$ and type-definable subgroups $H$ of those, the definitions and results we mention in this subsection are also valid when $G$ itself is type-definable. In that case we can talk about \emph{relatively definable/type-definable} subgroups $H\leq G$, given by $H=G\cap X$ for some definable/type-definable $X\subseteq M^n$ respectively.
+
+\begin{exmp}
+	A typical example of a type-definable group is the additive group $\Inf$ of \emph{infinitesimals} in a saturated elementary extension $\Rns$ of $(\R,<,+,\cdot,0,1)$, defined by $\Inf=\bigcap_{n<\omega}[-1/n,1/n]$. Note that if $\Rns$ is not (at least) $\aleph_1$-saturated, then $\Inf$ might simply reduce to the trivial group $\{0\}$ (as is the case in $\R$ itself).
+\end{exmp}
+
+\begin{defn}[Bounded index]
+	Given a type-definable subgroup $H\leq G$, we say that $H$ has \emph{bounded index} in $G$ if $|G/H|<\kappa$.
+\end{defn}
+
+\begin{rem}\
+	\begin{enumerate}
+		\item For a type-definable $X\subseteq M^n$ and some elementary extension $\N$ of $\M$, let $X(\N)$ denote the subset of $N^n$ given by the same formulas which define $X$. Then $H\leq G$ has bounded index if and only if $|G(\N)/H(\N)|=|G/H|$ for any $\N\succcurlyeq \M$ (otherwise $|G(\N)/H(\N)|$ can be made arbitrarily large by increasing $\N$).
+		\item $\Inf(\Rns)\leq\Rns$ (where $\Rns\succeq\R$) is an example of a subgroup which does not have bounded index; indeed, elementary extensions of $\R$ can also include arbitrarily many \emph{unbounded} elements (i.e.\ elements with absolute value larger than all $n<\omega$), so $\Rns/\Inf(\Rns)$ can have arbitrarily large size.
+	\end{enumerate}
+\end{rem}
+
+\ind Let $H\leq G$ be a type-definable subgroup of bounded index. We want to study $G/H$ as a topological group, and for that we need to equip it with an appropriate topology. One could try and define a topology on $G$, where the closed sets are precisely the type-definable subsets, and then consider the induced quotient topology on $G/H$. This approach does not work however, since there is no guarantee that the intersection of arbitrarily many type-definable sets will also be type-definable (by a family of fewer than $\kappa$ formulas). We instead consider the \emph{logic topology} on $G/H$, defined as follows:
+
+\begin{defn}[Logic topology]
+	Let $G$, $H$ be as above, and $P:G\to G/H$ be the standard projection map. Then the \emph{logic topology} on $G/H$ is given by:
+	\begin{equation*}
+		X \subseteq G/H \ \text{is closed}\ \iff \ P^{-1}(X)\subseteq G \ \text{is type-definable}.
+	\end{equation*}
+\end{defn}
+
+\ind One can now show the following (see \cite{typedef}):
+
+\begin{lem}\label{comHaus}
+	Let $G$ be a definable group, and let $H\leq G$ be type-definable, normal, and of bounded index. Then $G/H$ equipped with the logic topology is a compact Hausdorff topological group.
+\end{lem}
+
+\ind Finally, we introduce a notion of compactness on $G$ itself. Just like with connectedness, the regular notion of compactness does not apply to sufficiently saturated structures. Consider for example $[0,1](\Rns)$ in some $\aleph_1$-saturated $\Rns\succeq\R$; this set is not compact, as witnessed by the open cover $\{(x-\alpha,x+\alpha):x\in[0,1](\Rns)\}$, where $\alpha$ is a fixed infinitesimal (in fact, the same construction shows that $R$ has no infinite definable compact subsets). Observe that this open cover is also definable, so unlike in the case of definable connectedness in Chapter 2, we cannot get a useful notion of compactness simply by restricting to definable sets. Instead, we resort to the following definition (recall that the \emph{group topology} is the one that makes $G$ into a ``manifold'' over $M$):
+
+\begin{defn}[Definable compactness]
+	Let $G$ be a definable group, equipped with its group topology. We say $G$ is \emph{definably compact} if for every continuous definable function $f:[a,b)\mapsto G$ (where $a,b\in M$), the limit $\lim_{t\to b}f(t)$ exists in $G$.
+\end{defn}
+
+
+\subsection{A Motivating Example}
+
+\ind We will now present an elementary example, which motivates the main idea behind Pillay's conjecture. Consider the compact group
+\begin{equation*}
+	G:=SO(2,\R) = \left\{\begin{pmatrix} a & b \\ -b & a \end{pmatrix}\, \in\, GL(2,\R)\, :\, a^2+b^2=1\right\}.
+\end{equation*}
+$G$ is definable in the real ordered field $\R$. Moreover, it is isomorphic as a Lie group to the complex unit circle $\mathbb{T}^1:=\{z\in \mathbb{C}: |z|=1\}$ (note that both $\mathbb{T}^1$ and the isomorphism $G\to \mathbb{T}^1$ are also definable in $\R$). Now let $\Rns$ be a $\kappa$-saturated elementary extension of $\R$ (for $\kappa$ large), and let $B\subseteq R$ be the set of \emph{bounded elements} in $\Rns$ (i.e.\ $B=\bigcup_{n<\omega}[-n,n]$). Consider the \emph{standard part map} $\st: B\to \R$, which maps each element of $B$ to its nearest real element (so $\st(x+\alpha)=x$ for $x\in\R\subseteq B$, $\alpha\in\Inf$). Now $\st$ induces a group homomorphism $\st:G(\Rns)=SO(2,\Rns)\to G$, given by:
+\begin{equation*}
+	\st \begin{pmatrix} a & b \\ -b & a \end{pmatrix} = \begin{pmatrix} \st(a) & \st(b) \\ \st(-b) & \st(a) \end{pmatrix}
+\end{equation*}
+Denote
+\begin{equation*}
+	G(\Rns)^{00}:=\ker(\st)=\bigcap_{n<\omega}\{A\in G(\Rns): |A-I|<1/n\},
+\end{equation*}
+where $I$ is the identity matrix. Then $G(\Rns)^{00}$ is a type-definable subgroup of $G(\Rns)$ of bounded index, and it can be shown that $G(\Rns)/G(\Rns)^{00}$ equipped with the logic topology is isomorphic to the compact Lie group $G\simeq\mathbb{T}^1$.
+
+\ind Pillay's conjecture is an attempt to generalise this behaviour to abstract o-minimal structures. In particular, the aim is to determine a canonical way of defining the ``group of infinitesimals'' $G^{00}$ in a definable group $G$, so that $G^{00}$ has bounded index and $G/G^{00}$ has a compact Lie group structure. As it turns out, in the general case $G^{00}$ is identified with the smallest type-definable subgroup of $G$ of bounded index.
+
+\section{The Conjecture}
+
+\ind We have now introduced all the background we need in order to state Pillay's conjecture.
+
+\begin{thm}[Pillay's conjecture]\label{pil conj}
+	Let $G$ be a definable group in a $\kappa$-saturated o-minimal structure $\M$ (for $\kappa$ large). Then:
+	\begin{enumerate}
+		\item $G$ has a smallest type-definable normal subgroup of bounded index, denoted by $G^{00}$;
+		\item $G/G^{00}$, equipped with the logic topology, is isomorphic (as a topological group) to a compact real Lie group;
+		\item If $G$ is definably compact, then $\dim(G/G^{00})$ (as a Lie group) equals $\dim G$ (as a definable subset of an o-minimal structure).
+	\end{enumerate}
+\end{thm}
+
+\ind Pillay's conjecture was immediately verified in some easier special cases \cite{typedef}. The first two claims of Pillay's conjecture were established in full generality a bit later \cite{desc chain con}. The third claim was first proved in o-minimal expansions of a real closed field \cite{groups measures nip} (this is the case we are interested in), and after some intermediate steps (\cite{ordered vs}, \cite{semi-bounded}), it was extended to all definably compact groups definable in o-minimal expansions of ordered groups. The last missing piece was algebraic in nature; it appeared in \cite{Pillay general}, completing the proof of the conjecture 13 years after it was formally stated.
+
+
+\subsection{Connected Components}
+
+\ind We briefly discuss the notion of the ``smallest type-definable normal subgroup of bounded index'', $G^{00}$. It is formally defined as follows:
+
+\begin{defn}[$G^{00}$]
+	Let $G'$ be the intersection of all type-definable subgroups of $G$ of bounded index. If $G'$ itself has bounded index, we say that the \emph{type-definably connected component} $G^{00}$ exists, and set $G^{00}=G'$.
+\end{defn}
+
+\ind It's easy to see that $G^{00}$ is indeed normal, as the conjugate of a type-definable subgroup of $G$ of bounded index also has the same properties. In particular, by \Cref{comHaus} we have that $G/G^{00}$ is a compact Hausdorff topological group.
+
+\ind The idea of considering a connected component of $G$ is not new. $G^{00}$ can be seen as a parallel of $G^0$, the \emph{definably connected component} of $G$, given by the intersection of all \emph{definable} subgroups of $G$ of \emph{finite} index (note that $G^0$ is also normal, and $G^{00}\leq G^0$). $G^0$ has been an object of interest in the study of stable groups (or groups definable in stable structures) for a long time. However, in a stable theory we have that every type-definable group is actually the intersection of definable groups (see e.g.\ \cite{stable groups 2}). So in presence of stability, $G^0=G^{00}$ and $G^0$ is called \emph{the} connected component of $G$.
+
+\ind The existence of $G^{00}$ and the fact that $G/G^{00}$ becomes a compact Lie group under the logic topology are established simultaneously by Pillay et al.\ in \cite{typedef} and \cite{desc chain con}. In particular, it is shown that $G$ satisfies (i) and (ii) in Pillay's conjecture if and only if $G$ satisfies the DCC (\emph{descending chain condition}) for type-definable subgroups of bounded index; that is, $G$ has no infinite descending chain of such subgroups. Shelah proved independently that in fact $G^{00}$ exists in all definable groups in (models of) NIP theories \cite{min bounded}:
+
+\begin{lem}[Shelah]
+	Let $G$ be an $A$-definable group in some $\kappa$-saturated model of an NIP theory $T$ (for $\kappa$ large). Then $G^{00}$ exists, is $A$-type-definable, and has index at most $2^{|T|+|A|}$.
+\end{lem}
+
+\ind This result already suggests NIP as an appropriate context for the study of groups definable in o-minimal theories.
+
+\subsection{Keisler Measures}
+
+\ind We now shift our attention to NIP theories, and their relation with o-minimality in the proof of the third statement in Pillay's conjecture (from now on referred to as PC (iii)), in the case where $\M$ expands a real closed field. In this subsection, unless otherwise specified, we consider a group $G$ definable in a $\kappa$-saturated model $\M$ of an NIP theory $T$. For convenience, we assume $G$ to be $\emptyset$-definable (of course this is the same as adding constants, so we don't lose generality). We first need to introduce the concept of \emph{Keisler measures}:
+
+\begin{defn}[Keisler measure] Let $G$ be an $\emptyset$-definable group in $\M$, and $A\subseteq M$. A \emph{Keisler measure} $\mu$ on $G$ over $A$ is a finitely additive probability measure on $\Def_A(G)$ (i.e.\ a function $\mu:\Def_A(G)\to[0,1]$ such that $\mu(\emptyset)=0$, $\mu(G)=1$, $\mu(X\cup Y)=\mu(X)+\mu(Y)-\mu(X\cap Y)$ for $X,Y\in\Def_A(G)$). If $A=M$, we call $\mu$ a \emph{global Keisler measure} on $G$.
+\end{defn}
+
+\begin{rem}\
+	\begin{enumerate}
+		\item Naturally, the definition can be extended to any definable set $G$ in any model of any complete theory (not necessarily NIP).
+		\item Suppose $G=\theta(\M)$ for some $\L$-formula $\theta(x)$, and let $\L^G_x(A)$ denote the Boolean algebra of $\L_A$-formulas in free variable $x$, quotiented by the equivalence relation $\phi(x)\sim\psi(x)\iff\M\models\big(\phi(x)\wedge\theta(x)\siff\psi(x)\wedge\theta(x)\big)$.
+		      Then we can equivalently think of a Keisler measure $\mu$ on $G$ over $A$ as a function $\mu:\L^G_x(A)\to[0,1]$ such that $\mu(x=x)=1$, $\mu\big(\neg(x=x)\big)=0$, $\mu\big(\phi(x)\vee\psi(x)\big)=\mu\big(\phi(x)\big)+\mu\big(\psi(x)\big)-\mu\big(\phi(x)\wedge\psi(x)\big)$ for $\phi(x),\psi(x)\in\L^G_x(A)$. Note that with this definition we get rid of any dependence on $\M$, as long as $A\subseteq M$.
+	\end{enumerate}
+\end{rem}
+
+\ind Given a complete type $p(x)\in S_x(A)$ with $G\in p(x)$ (i.e.\ such that $p$ includes the formula defining $G$), we can identify $p$ with a 0-1 Keisler measure $\mu_p$ on $G$ over $A$, by setting:
+\begin{equation*}
+	\mu_p(X) = 1 \iff X = \phi(\M)\cap G\ \text{for some}\ \phi(x)\in p(x).
+\end{equation*}
+In fact, many properties of types can be extended to Keisler measures, making them an essential tool in the study of NIP theories, and allowing the generalisation of stable-like behaviour in unstable settings (see e.g.\ Keisler's original paper \cite{keisler}, Chapter 7 in \cite{nip guide}, \cite{groups measures nip}, or \cite{generically}). One such property which is relevant to our purposes is \emph{generic stability}. A generically stable type $p(x)\in S_x(M)$ is one which exhibits stable-like behaviour, in the sense that there is a small model $\M_0\preceq\M$ such that:
+\begin{enumerate}
+	\item $p$ is \emph{definable} in $\M_0$, i.e.\ for every $\L$-formula $\phi(x;y)$ there is some $\L_{M_0}$-formula $d_p\phi(y)$ such that for all $a\in M$, $\phi(x;a)\in p(x)\iff \M\models d_p\phi(a)$;
+	\item $p$ is \emph{finitely satisfiable} in $\M_0$, i.e.\ for all $\phi(x)\in p$ there is some $a\in M_0$ with $\M\models\phi(a)$.
+\end{enumerate}
+
+We obtain an analogous definition for measures as follows:
+
+\begin{defn}[Generically stable measure] Let $G$ be an $\emptyset$-definable group in $\M$, $\mu$ be a global Keisler measure on $G$, and $\M_0\preceq \M$.
+	\begin{enumerate}
+		\item We say that $\mu$ is $M_0$-\emph{invariant} if for all $\L$-formulas $\phi(x;y)$ and all $a,b\in M$ with $a\equiv_{M_0} b$ we have $\mu(\phi(x;a))=\mu(\phi(x;b))$.
+		\item We say that $\mu$ is \emph{definable} in $\M_0$ if it is $M_0$-invariant, and for all $\L$-formulas $\phi(x;y)$ and all $r\in[0,1]$, the set
+		      \begin{equation*}
+			      \big\{p(y)\in S_y(M_0):\mu(\phi(x;a))<r\ \text{for all}\ a\in M\ \text{with}\ \M\models p(a)\big\}
+		      \end{equation*}
+		      is open in $S_y(M_0)$.
+		\item We say that $\mu$ is \emph{finitely satisfiable} in $\M_0$ if for all $\L_M$-formulas $\phi(x)$ with $\mu(\phi(x))>0$ there is some $a\in M_0$ such that $\M\models \phi(a)$.
+		\item We say that $\mu$ is \emph{generically stable} if it is definable and finitely satisfiable in some small model $\M_0\preceq\M$.
+	\end{enumerate}
+\end{defn}
+
+\begin{rem}
+	It's easy to check that a generically stable type $p(x)\in S_x(M)$ with $G\in p(x)$ is also generically stable when considered as a Keisler measure $\mu_p$ on $G$.
+\end{rem}
+
+\ind We now define two relevant properties of definable groups.
+
+\begin{defn}[Definably amenable]
+	An $\emptyset$-definable group $G$ is called \emph{definably amenable} if it admits a left-invariant global Keisler measure $\mu$ (i.e.\ such that $\mu(gX)=\mu(X)$ for all $g\in G$, $X\in\Def(G)$).
+\end{defn}
+
+\begin{rem}
+	Equivalently, $G$ is definably amenable if it admits a right-invariant global Keisler measure; indeed, if $\mu$ is left/right-invariant on $\Def(G)$, then the Keisler measure $\nu$ defined by $\nu(X) = \mu\big(X^{-1}\big)$ for $X\in\Def(G)$ (where $X^{-1}:=\{x^{-1}:x\in X\}$) is respectively right/left-invariant.
+\end{rem}
+
+\begin{defn}[FSG]
+	Let $G$ be $\emptyset$-definable in $\M$. We say that $G$ has \emph{FSG (finitely satisfiable generics)} if there is some $p(x)\in S_x(M)$ with $G\in p(x)$, and some small model $\M_0\preceq \M$ such that for all $g\in G$, the \emph{left translate} $gp:=\big\{\phi(x):\phi\big(g^{-1}x\big)\in p\big\}$ of $p$ is finitely satisfiable in $M_0$.
+\end{defn}
+
+\ind The following result, which is interesting in its own right, was a crucial development towards proving PC (iii):
+
+\begin{thm}\label{gen stable}
+	Let $G$ be $\emptyset$-definable in a $\kappa$-saturated model $\M$ of some NIP theory $T$. Then G has FSG if and only if it admits a generically stable left-invariant global Keisler measure. In particular, if $G$ has FSG, then $G$ is definably amenable.
+\end{thm}
+
+\ind A proof of this statement can be found in Chapter 8 of \cite{nip guide}. Applied specifically to the case where $T$ is o-minimal (and hence NIP, by \Cref{NIP omin}), this result provides the missing link which allows the generalisation of previously solved subcases of PC (iii) to the more general case of a definably compact group, definable in an o-minimal expansion of a real closed field. This is possible because one can show (see \cite{groups measures nip}):
+
+\begin{prop}\label{FSG}
+	Let $\M$ be a $\kappa$-saturated o-minimal expansion of a real closed field, and let $G$ be a definably compact group, $\emptyset$-definable in $\M$. Then $G$ has FSG.
+\end{prop}
+
+\ind The above result gives us a concrete example of stable-like behaviour appearing in unstable settings. Indeed, all stable groups have FSG, and hence are definably amenable (see Chapter 8 in \cite{nip guide}). Some stable properties that FSG generalises, which serve as another a fundamental ingredient in the proof of PC (iii), involve \emph{generic sets} and \emph{generic types}:
+
+\begin{defn}[Generic set/type] Let $G$ be a group defined in a model $\M$ of an arbitrary theory.
+	\begin{enumerate}
+		\item A definable set $X\subseteq G$ is called \emph{left/right generic} if $G$ can be covered by finitely many left/right, respectively, translates of $X$.
+		\item A type $p(x)\in S_x(M)$ with $G\in p(x)$ is called \emph{left/right generic} if every set defined by a formula from $p$ is respectively left/right generic.
+	\end{enumerate}
+\end{defn}
+
+\ind Generic sets and types have been studied extensively in stable theories. The following classic results regarding stable groups generalise to all groups $G$ with FSG (see Chapter 8 in \cite{nip guide}):
+
+\begin{enumerate}
+	\item the (generically stable) left-invariant global Keisler measure that $G$ admits is unique, and it is also the unique right-invariant global Keisler measure on $G$;
+	\item left generic sets coincide with right generic sets (so they are usually called just \emph{generics});
+	\item generic types exist (in fact, if $p(x)\in S_x(M)$ witnesses that $G$ has FSG, then $p$ can be taken to be generic);
+	\item the non-generic sets form a proper ideal in $\Def(G)$ (or equivalently, if $X_1$, $X_2$ are definable and $X_1\cup X_2$ is generic, then either $X_1$ or $X_2$ is generic).
+\end{enumerate}
+\
+
+\ind We finish with a few words on the overall structure of the proof of PC (iii) in the case where $\M$ expands a real closed field. Roughly speaking, the proof proceeds by induction on $\dim(G)$, and applies various deep results from group theory in order to reduce the claim to simpler cases. FSG is essential only for one crucial step in the argument. In particular, an equivalence relation on the definable subsets of $G$ is defined, with $X\sim Y$ if and only if their symmetric difference is not generic (this is well defined by (iv) above). Assuming FSG, one can show that given a definable $X\subseteq G$, its \emph{stabiliser} $\Stab(X):=\{g\in G: gX\sim X\}$ is a type-definable subgroup of $G$ of bounded index (definable amenability of $G$ is essential for this argument). It then follows that $G^{00}$ exists (which we knew already), and that if $p$ is a generic type (such a type exists, by (iii) above), then $G^{00}=\bigcap_{X\in p}\Stab(X)$. We stress that the argument we just described does not require o-minimality, but is in fact valid in any NIP theory. The particular way in which this is used in the proof of PC (iii) lies beyond the scope of this essay.
+
+\section{Compact Domination}
+
+\ind Recall that in the motivating example given in Subsection 3.1.3, there are two objects which can be seen as intrinsic to the definable group $G$: its ``group of infinitesimals'' $G^{00}$, and the ``standard part map'' $\st:G\to G/G^{00}$. As we saw, Pillay's conjecture deals with the first one, by giving a canonical definition of $G^{00}$ which satisfies the same properties as its heuristic counterpart. Pillay also conjectured that there should be some concrete way of describing the notion of a ``standard part map'' as well. The formalisation of this idea led to what is known as the \emph{compact domination conjecture} (now also a theorem):
+
+\begin{thm}[Compact domination conjecture]\label{compact dom}
+	Let $G$ be a definably compact group, definable in a saturated o-minimal structure $\M$. Then $G$ is \emph{compactly dominated} (by $G/G^{00}$); namely, if $\mu$ is the \emph{Haar measure} on $G/G^{00}$, then for every definable $X\subseteq G$ we have:
+	\begin{equation*}
+		\mu\big(\{a\in G/G^{00}: aG^{00}\cap X\neq \emptyset,\: aG^{00}\cap (G\backslash X)\neq\emptyset\}\big) = 0.
+	\end{equation*}
+\end{thm}
+
+\begin{rem}
+	Note that since $G/G^{00}$ is a compact Hausdorff topological group, it makes sense to talk about its Haar measure.
+\end{rem}
+
+\ind By developing the theory of generically stable types and invariant Keisler measures, and combining a number of deep results from various areas of study, Hrushovski and Pillay verified the conjecture in the case where $G$ is a definably compact commutative group, definable in an o-minimal expansion of a real closed field \cite{nip inv meas}. Full generality was achieved through a more self contained proof, with the help of \emph{smooth} Keisler measures.
+
+\begin{defn}
+	Let $G$ be a group definable in $\M$, and $\mu$ be a Keisler measure on $G$. We say that $\mu$ is \emph{smooth} if for every $\N\succeq\M$ there is a unique global (over $N$) Keisler measure $\nu$ on $G(\N)$ such that the restriction of $\nu$ on $\Def_M(G)$ is $\mu$.
+\end{defn}
+
+\ind In particular, one can show (see Section 8.4 in \cite{nip guide}):
+
+\begin{prop}\label{smooth}
+	Let $G$ be a group definable in a saturated model of an NIP theory. Then $G$ is compactly dominated if and only if it admits a smooth left-invariant Keisler measure.
+\end{prop}
+
+\ind It turns out that this condition is satisfied by definably compact groups in o-minimal structures. This follows from a general fact about measures in the wider class of \emph{distal} theories, which includes the class of o-minimal theories, and is included in the class of NIP theories (see Chapter 9 in \cite{nip guide}):
+
+\begin{prop}\label{distal}
+	Let $G$ be a group definable in a saturated model of a distal theory. Then any generically stable Keisler measure on $G$ (if it exists) is smooth.
+\end{prop}
+
+\ind \Cref{compact dom} now follows from (\ref{FSG}), (\ref{gen stable}), (\ref{distal}) and (\ref{smooth}). Note that this proof shows that in fact every group which is definable in a saturated o-minimal (or indeed distal) structure and has FSG is compactly dominated.
+
+\newpage
+\uchapter{Final Remarks}
+
+\ind In this essay we have viewed NIP and o-minimality from an ``applied'' point of view. After developing just enough tools in NIP in order to show that the complete theory of an o-minimal structure is NIP, we focused on o-minimality as a property with rich structural consequences. We then saw how concepts from the study of definable groups in o-minimal structures can (and often should) be viewed in the more general context of NIP. In the other direction, we saw how seemingly ``pure'' tools, whose initial purpose was to extend certain properties from stable to NIP theories, can help answer some rather deep and intricate questions when applied to o-minimal structures. There is however a lot more to be said on NIP theories, o-minimality, and the interaction of the two in the landscape of modern research in model theory. We conclude this essay by presenting two current research directions related to these notions.
+
+\ind In a sense, a stable theory can be seen as an extreme case of an NIP theory. It is natural then to ask what sort of behaviour can be observed in the other extreme, when an NIP theory is ``as unstable as possible''. This is the motivation behind the notion of \emph{distality}, which we briefly mentioned in the context of compact domination. Distality was introduced by Simon in \cite{distal}, and was originally defined in terms of indiscernible sequences. An equivalent definition of distality which is relevant to the content of this essay is through generically stable measures: an NIP theory is distal if and only if all generically stable measures are smooth (see Chapter 9 in \cite{nip guide}). By examining what happens when distality fails, one can obtain useful information concerning the interaction of order and stability in the context of NIP. As already mentioned, an o-minimal theory is a familiar example of a distal theory.
+
+\ind As it turns out, the relation between NIP and binary graphs (as explored in \Cref{nipformex} (ii)) motivates a stronger notion of dependence, namely $n$-\emph{dependence} for $n<\omega$.  Similarly to how NIP describes the inability of a formula to encode a random bipartite graph structure, $n$-dependence describes the inability of a formula to encode a random $(n + 1)$-partite $(n + 1)$-hypergraph structure. This notion was introduced by Shelah in \cite{strong dep}, and further results of interest can be found in \cite{n dep} and \cite{n dep 2}.
+
+
+
+\newpage
+
+\uchapter{Appendix}
+
+
+\indramsey*
+
+\begin{proof}[Proof]
+	First note that by compactness, it suffices to prove this when $J=\omega$. Moreover, by adding $C$ as constants to the language, we may assume $C=\emptyset$. Now add $B=(b_j:j<\omega)$ as constants to $\L$ to obtain the language $\L_B$, and consider the $\L_B$-theory $T_B$ which expands $T$ as follows:
+	\begin{itemize}
+		\item For all $n<\omega$, for all $i_1<\cdots<i_n<\omega$, $j_1<\cdots<j_n<\omega$ and for all $\L$-formulas $\phi(x_1,\ldots,x_n)$ add the $\L_B$-sentence $\phi(b_{i_1},\ldots,b_{i_n})\siff\phi(b_{j_1},\ldots,b_{j_n})$. Denote the set of all such sentences by $T_1$.
+		\item For all $n<\omega$, for all $i_1<\cdots<i_n$ and for all $\phi(x_1,\ldots,x_n)\in\EM(A)$ add the $\L_B$-sentence $\phi(b_{i_1},\ldots,b_{i_n})$.
+	\end{itemize}
+	By compactness, we just need to show that $T_B$ is finitely satisfiable. So let $S\subseteq T_B$ be finite, and let $S_1=S\cap T_1$. Suppose that $\phi_1,\ldots,\phi_k$ are all the formulas involved in $S_1$, and let $m=\max|x|$ over all $\phi(x)\in S$. For $\varepsilon\in\{0,1\}^k$, let $\phi^\varepsilon=\phi_1^{\varepsilon_1}\wedge\cdots\wedge\phi_k^{\varepsilon_k}$ (where $\phi^1:=\phi$, $\phi^0:=\neg\phi$). Induce a $2^k$-colouring on $A^{(m)}$ by colouring $(a_{i_1},\ldots,a_{i_m})$ (where $i_1<\cdots<i_m$) with colour $\varepsilon$ if and only if $\models\phi^\varepsilon(a_{i_1},\ldots,a_{i_m})$. By Ramsey, there exists an infinite monochromatic set $A'\subseteq A$. Now consider an order preserving injection $f:B\to A'$ and interpret $b_i$ as $f(b_i)$. The claim now follows easily by construction.
+\end{proof}
+
+
+\par\noindent\rule{\textwidth}{0.4pt}
+
+\begin{thm*}
+	A theory $T$ is stable if and only if it is NIP and there are no formulas with SOP in $T$.
+\end{thm*}
+
+\ind For an overall exposition of the background required for this proof, see Chapter 2 in \cite{casanovas}. We recall:
+
+\begin{defn*}[Strict order property]
+	An $\L$-formula $\phi(x;y)$ has the \emph{strict order property (SOP)} if there is a sequence $(b_i:i<\omega)$ such that for any $i<j<\omega$ we have $\phi(\U;b_i)\subsetneq\phi(\U;b_j)$.
+\end{defn*}
+
+\begin{rem*}\
+	\begin{enumerate}
+		\item By compactness, we can replace $\omega$ by any linear order in the definitions of OP and SOP.
+		\item For both OP and SOP, the definitions extend to formulas with parameters. It's clear that given a formula $\phi(x;y\tophat z)$ and a $|z|$-tuple $c$, if $\phi(x;y,c)$ has OP/SOP then $\phi(x;y\tophat z)$ has OP/SOP respectively as well.
+		\item Note that SOP implies OP. Indeed, for $i<\omega$ choose $a_i\in\phi(\U;b_{i+1})\backslash\phi(\U;b_i)$, then we have $\models\phi(a_i;b_j)\iff i>j$, so $\phi^{-1}(y;x)$ has OP. But now a simple compactness argument shows that $\phi$ has OP if and only if $\phi^{-1}$ has OP.
+	\end{enumerate}
+\end{rem*}
+
+\begin{proof}
+	$(\implies)$: This follows from \Cref{stable->nip} and (iii) in the above remark.
+
+	$(\Leftarrow)$: Suppose $T$ is NIP but not stable, which means that there is some formula $\phi(x;y)$ which is unstable in $T$. We will show that there is a formula with SOP in $T$. Since $\phi$ is unstable it has OP, and so does $\phi^{-1}$. So there are sequences $(a_i:i<\omega)$ and $(b_i:i\in \Q)$ such that $\models \phi(a_i;b_j)\iff i>j$. By \Cref{indramsey}, we may assume that $B$ is indiscernible.
+
+	Since by assumption $\phi^{-1}$ is NIP, there is $n<\omega$ such that $\phi^{-1}$ does not shatter any set of size $n$. In particular, there is $S\subseteq n$ such that the formula
+	\begin{equation*}
+		\chi_0(x) := \bigwedge_{i\in S}\phi(x;b_i)\, \wedge\, \bigwedge_{i\in n\backslash S} \neg\phi(x;b_i)
+	\end{equation*}
+	is not satisfiable. We inductively construct formulas $\{\chi_k:k\leq m\}$ for some $m<n$ as follows. Given $\chi_k$, let $i_k$ be such that
+	\begin{equation*}
+		\chi_k(x) := \theta_k(x;\b_k)\wedge \neg\phi(x;b_{i_k}) \wedge \phi(x;b_{i_k+1}),
+	\end{equation*}
+	for some formula $\theta_k(x;\y)$, and $\b_k=(b_i:i\in n\backslash\{i_k,i_k+1\})$. Then let:
+	\begin{equation*}
+		\chi_{k+1}(x) := \theta_k(x;\b_k)\wedge \phi(x;b_{i_k}) \wedge \neg\phi(x;b_{i_k+1}).
+	\end{equation*}
+	This process terminates at step $m$, at which point for $s=|S|$ we have:
+	\begin{equation*}
+		\chi_m(x) := \bigwedge_{i< s} \phi(x;b_i)\, \wedge\, \bigwedge_{s\leq i<n}\neg\phi(x;b_i).
+	\end{equation*}
+	Note that $\models\chi_m(a_s)$, i.e.\ $\chi_m$ is satisfiable, so at some step $k$ in this process we must pass from a non-satisfiable $\chi_k$ to a satisfiable $\chi_{k+1}$. Let $\psi(x;y) :=\theta_k(x;\b_k)\wedge\phi(x;y)$ for this $k$. Since $\chi_{k+1}$ is satisfiable, we have:
+	\begin{equation*}
+		\setlength{\jot}{\topsep}
+		\begin{aligned}
+			           & \models \exists x\big(\theta_k(x;\b_k)\wedge\phi(x;b_{i_k})\wedge\neg\phi(x,b_{i_k+1})\big)                                   \\
+			\implies\  & \models \forall x\,\neg\big((\theta_k(x;\b_k)\wedge\phi(x;b_{i_k}))\wedge(\neg\theta_k(x;\b_k)\vee\neg\phi(x;b_{i_k+1}))\big) \\
+			\implies\  & \models \forall x(\psi(x;b_{i_k})\simplies\psi(x;b_{i_k+1})),
+		\end{aligned}
+	\end{equation*}
+	which means that $\psi(\U;b_{i_k}) \subseteq \psi(\U;b_{i_k+1})$. On the other hand, since $\chi_{k}$ is not satisfiable, in a similar manner we get $\psi(\U;b_{i_k+1}) \not\subseteq \psi(\U;b_{i_k})$. Hence, $\psi(\U;b_{i_k}) \subsetneq \psi(\U;b_{i_k+1})$.\\
+
+	Now consider the $\L$-formula $\delta(y_0,\ldots,y_{n-1})$, which is obtained by replacing the parameter $b_i$ with the variable $y_i$ in the $\L_B$-formula
+	\begin{equation*}
+		\forall x(\psi(x;b_{i_k})\simplies\psi(x;b_{i_k+1}))\: \wedge\: \exists x\, \neg(\psi(x;b_{i_k+1})\simplies\psi(x;b_{i_k})).
+	\end{equation*}
+	We have shown that $\models \delta(b_0,\ldots,b_{n-1})$. For $i_k\leq i<j\leq i_k+1$, let
+	\begin{equation*}
+		\b_{i,j} = (b_0,\ldots,b_{i_k-1},b_i,b_j,b_{i_k+2},\ldots,b_{n-1}).
+	\end{equation*}
+	Then, by indiscernibility, for all $i,j$ we have $\models \delta(\b_{i,j})$, i.e.\ $\psi(\U;b_i) \subsetneq \psi(\U;b_j)$. So the sequence $(b_i:i\in\Q\cap[i_k,i_k+1])$ witnesses that $\psi$ has SOP. By (ii) in the above remark, there is a formula with SOP in $T$ as claimed.
+\end{proof}
+
+
+\par\noindent\rule{\textwidth}{0.4pt}
+
+\celldeclem*
+
+\ind In order to simplify the structure of the argument a bit, we introduce an intermediate step, which should be viewed as a subclaim of (iii). This step is only used in the proof of (iii), and it is proved simultaneously with (iii) within the same overall inductive argument which proves \Cref{celldeclem}. First we need two more preliminary definitions:
+
+\begin{defn*}[First/last point functions]
+	Let $X\subseteq M^n$ be definable and suppose $\phi(x;y)$ is finite	over $X$. Let $Y = \{a \in X : \phi(a;\M)\neq\emptyset\}$. The following functions are clearly definable:
+	\begin{itemize}
+		\item The \emph{first point function} $\phi_-: Y \to M$ of $\phi$ on $X$, given by $\phi(x) = \min\{y : \phi(x; y)\}$;
+		\item The \emph{last point function} $\phi_+: Y \to M$ of $\phi$ on $X$, given by $\phi(x) = \max\{y : \phi(x; y)\}$;
+	\end{itemize}
+\end{defn*}
+
+\begin{defn*}[``Good'' point]
+	Let $C\subseteq M^n$ be an (open) $n$-cell, and $\phi(x;y)$ ($|x|=n$, $|y|=1$) be finite over $C$. A point $a\in C$ is called \emph{good} for $\phi$ if the following hold:
+	\begin{itemize}
+		\item for every $b\in \phi(a;\M)$, there is an open box $B\subseteq C$ containing $a$ and an open interval $I\subseteq M$ containing $b$ such that $\phi(\M^{n+1})\cap(B\times I)$ is the graph of a continuous function $f:B\to I$;
+		\item for every $b\in\neg\phi(a;\M)$, there is an open box $B\subseteq \neg\phi(\M^{n+1})$ containing $(a,b)$.
+	\end{itemize}
+	If $a\in C$ is not good for $\phi$, it said to be \emph{bad} for $\phi$.
+\end{defn*}
+
+\ind We now state the intermediate step. For convenience, despite it being considered a part of (iii), it will be referred to as \Cref{celldeclem} (iv).
+
+\begin{mlem}{\ref{celldeclem}}[iv]\label{interfinite} Suppose that:
+	\begin{itemize}
+		\item $\phi(x;y)$ ($|x|=n$, $|y|=1$) is finite over $C$, with $\phi(a;\M)\neq\emptyset$ for all $a\in C$;
+		\item $\phi_-$, $\phi_+$ are continuous on $C$;
+		\item every point $a\in C$ is good for $\phi$.
+	\end{itemize}
+	Then the function $x\mapsto|\phi(x;\M)|$ is constant on $C$.
+\end{mlem}
+
+\ind We can finally proceed with the proof of \Cref{celldeclem}.
+
+\begin{proof}[Proof of \Cref{celldeclem} (Sketch)]\
+	\begin{itemize}[leftmargin=*,itemsep=12pt]
+		\item \emph{Base case $(n=1)$}.
+		      \begin{enumerate}[itemsep=12pt,label=(\roman*)$_1$]
+			      \item This is immediate by the definition of o-minimality.
+			      \item Trivial if $C$ is a singleton. For $C$ an open interval, this is just a weaker version the monotonicity theorem (\ref{mono}).
+			      \item This is where things start to get more technical. First note that the claim is trivial if $C$ is a singleton, so suppose $C=(a,b)$ for $a,b\in M_{\infty}$. By (i)$_1$ and (ii)$_1$, we may assume that $\phi_-$ and $\phi_+$ are defined and continuous on all of $(a,b)$. Now assuming (iv)$_1$, it's easy to see that (iii)$_1$ reduces to the following:
+
+			            \begin{claim*}
+				            Suppose $\phi(x;y)$ is finite over $(a,b)$ and that $\phi_-$ and $\phi_+$ are defined and continuous on $(a,b)$. Then the set of bad points in $(a,b)$ is finite.
+			            \end{claim*}
+
+			            \begin{subproof}[Proof of Claim (Sketch)]
+				            Suppose $(a,b)$ has infinitely many bad points. Then by (i)$_1$, we may assume that every $c\in(a,b)$ is bad, as witnessed by some $d_c\in M$. One can show that there is a definable (and after applying (ii)$_1$, continuous) function $g$ picking out the least such $d_c$ for each $c\in (a,b)$. There are two possible ways in which $(c,g(c))$ can witness that $c$ is bad for $\phi$ (depending on which condition of the definition it fails), and by (i)$_1$, we may assume that all $(c,g(c))$ for $c\in(a,b)$ witness this in the same way. Now define functions $g_1$, $g_2$ on $(a,b)$ such that:
+				            \begin{equation*}
+					            \begin{aligned}
+						            g_1(x) & =
+						            \begin{cases}
+							            \max\{y:\phi(x;y),\,y<g(x)\} & \text{if such}\ y\ \text{exists;} \\
+							            -\infty                      & \text{otherwise},
+						            \end{cases}
+						            \\
+						            g_2(x) & =
+						            \begin{cases}
+							            \min\{y:\phi(x;y),\,y>g(x)\} & \text{if such}\ y\ \text{exists;} \\
+							            \infty                       & \text{otherwise}.
+						            \end{cases}
+					            \end{aligned}
+				            \end{equation*}
+				            By (i)$_1$ and (ii)$_1$, we may assume that both $g_1$ and $g_2$ are either finite and continuous, or infinite on $(a,b)$. In any case, for $c\in(a,b)$ we can find a box around $(c,g(c))$ which is disjoint from $\Gamma(g_1)\cup\Gamma(g_2)$, and now we easily get a contradiction in the form of $(c,g(c))$ not witnessing that $c$ is bad.
+			            \end{subproof}
+
+			            To complete the proof of (iii)$_1$ we need to prove the intermediate step (iv)$_1$ for $C=(a,b)$.
+
+			            \begin{subproof}[Proof of (iv)$_\mathit{1}$ (Sketch)]
+				            Suppose for the sake of contradiction that there is $K\in\Nat$ such that $X=\{c\in(a,b):|\phi(c;\M)|=K\}$ is a non-empty, proper subset of $(a,b)$. By \Cref{defconbound}, $X$ has a boundary point $c\in(a,b)$. Now let $\phi(c;\M)=\{d_1,\ldots,d_L\}$, where $L\in\Nat$ and $d_1<\cdots<d_L$. Since $c$ is good for $\phi$, there is an open interval $I$ containing $c$, disjoint intervals $J_1,\ldots,J_L$ such that $d_i\in J_i$, and continuous functions $g_1<\cdots<g_L$ on $I$, such that $\phi(\M^2)\cap (I\times J_i)=g_i$ for $i=1,\ldots,L$.
+
+				            \begin{center}
+					            \begin{tikzpicture}[scale=1.3]
+						            %axes
+						            \draw (-0.2, 0) -- (5.3, 0);
+						            \draw (0, -0.2) -- (0, 3);
+						            \draw (0, 3.8) -- (0, 5.1);
+						            \draw (0, 3.5) node {$\vdots$};
+
+						            %horizontal intervals
+						            \draw (0.5, 0) node {$\left(\right.$};
+						            \draw (1.4, 0) node {$\left(\right.$};
+						            \draw (3.8, 0) node {$\left.\right)$};
+						            \draw (4.7, 0) node {$\left.\right)$};
+
+						            %labels
+						            \draw (0.5, -0.5) node[above] {$a$};
+						            \draw (2.05, -0.4) node[above] {$c$};
+						            \draw (3.3, -0.45) node [above] {$I$};
+						            \draw (4.7, -0.5) node[above] {$b$};
+
+						            %vertical intervals
+						            \draw (-0.15, 0.6) -- (0.15, 0.6);
+						            \draw[dashed] (1.4, 0.6) -- (3.8, 0.6);
+						            \draw (-0.15, 1.5) -- (0.15, 1.5);
+						            \draw[dashed] (1.4, 1.5) -- (3.8, 1.5);
+						            \draw (-0.15, 1.9) -- (0.15, 1.9);
+						            \draw[dashed] (1.4, 1.9) -- (3.8, 1.9);
+						            \draw (-0.15, 2.8) -- (0.15, 2.8);
+						            \draw[dashed] (1.4, 2.8) -- (3.8, 2.8);
+						            \draw (-0.15, 4.0) -- (0.15, 4.0);
+						            \draw[dashed] (1.4, 4.0) -- (3.8, 4.0);
+						            \draw (-0.15, 4.9) -- (0.15, 4.9);
+						            \draw[dashed] (1.4, 4.9) -- (3.8, 4.9);
+
+						            %labels
+						            \draw (0, 1.07) node[left] {$J_1$};
+						            \draw (0, 2.34) node[left] {$J_2$};
+						            \draw (0, 4.5) node[left] {$J_L$};
+
+						            %shit in the middle
+						            \draw[dashed] (2.05, 0) -- (2.05, 3);
+						            \draw (2.05, 3.5) node {$\vdots$};
+						            \draw[dashed] (2.05, 3.8) -- (2.05, 5.1);
+						            \draw[dashed] (1.4, 0.6) -- (1.4, 1.5);
+						            \draw[dashed] (3.8, 0.6) -- (3.8, 1.5);
+						            \draw[dashed] (1.4, 1.9) -- (1.4, 2.8);
+						            \draw[dashed] (3.8, 1.9) -- (3.8, 2.8);
+						            \draw[dashed] (1.4, 4) -- (1.4, 4.9);
+						            \draw[dashed] (3.8, 4) -- (3.8, 4.9);
+						            \draw[fill] (2.05, 0) circle (0.05);
+						            \draw[fill] (2.05, 1.16) circle (0.05);
+						            \draw[fill] (2.05, 2.2) circle (0.05);
+						            \draw[fill] (2.05, 4.4) circle (0.05);
+
+						            \draw[smooth] plot[tension=0.7] coordinates {(1.4, 4.5) (1.7, 4.55) (2.05, 4.4)
+								            (2.4, 4.55) (2.9, 4.7) (3.3, 4.6) (3.8, 4.55)};
+						            \draw[smooth] plot[tension=0.7] coordinates {(1.4,2.3) (1.7, 2.4) (2.05, 2.2)
+								            (2.4, 2.25) (2.9, 2.15) (3.3, 2.35) (3.8, 2.3)};
+						            \draw[smooth] plot[tension=0.7] coordinates {(1.4, 1.1)(1.7, 1.02) (2.05, 1.16)
+								            (2.4, 1.08) (2.9, 1) (3.3, 1.12) (3.8, 1.18)};
+
+						            \draw (2.27, 4) node[above] {\small $d_L$};
+						            \draw (3.62, 4.2) node[above] {\small $g_L$};
+						            \draw (2.27, 2.67) node[below] {\small $d_2$};
+						            \draw (3.62, 2.37) node[below] {\small $g_2$};
+						            \draw (2.27, 1.16) node[below] {\small $d_1$};
+						            \draw (3.62, 1.18) node[below] {\small $g_1$};
+					            \end{tikzpicture}
+				            \end{center}
+
+				            In particular, for all $c'\in I$ we must have $|\phi(c';\M)|\geq L$. Since $c$ is a boundary point for $X$, the function $x\mapsto|\phi(x;\M)|$ is not constant on any neighbourhood of $c$. So without loss of generality, there is an open interval $I_0=(c,c_0)\subseteq I$ such that $|\phi(c';\M)|>L$ for all $c'\in I_0$. Then the function
+				            \begin{equation*}
+					            g(x)=\min\{y:\phi(x;y),\,(x,y)\notin\Gamma(g_i)\cup\cdots\cup\Gamma(g_L)\}
+				            \end{equation*}
+				            is definable on $I_0$. Using \Cref{limits} and the fact that $\phi_-$, $\phi_+$ are continuous on $(a,b)$, we get that $d:=\lim_{x\to c^+}g(x)$ exists in $M$. But now considering the two cases $\phi(c;d)$ and $\neg\phi(c;d)$, we get a contradiction to $c$ being good for $\phi$.
+			            \end{subproof}
+		      \end{enumerate}
+
+		\item \emph{Inductive step $(n>1)$}. Now assume (i)$_k$, (ii)$_k$, (iii)$_k$ for $k<n$.
+		      \begin{enumerate}[itemsep=12pt,label=(\roman*)$_n$]
+			      \item The case $\dim C<n$ is easy, by the inductive hypothesis and \Cref{cellrem} (iii). Now suppose $X_1,\ldots,X_m\subseteq C$ are definable, where $\dim C=n$. Let $P:M^n\to M^{n-1}$ denote the projection map in the first $n-1$ coordinates, and let $C'=P(C)$. Then by definition we have $C=(f,g)_{C'}$ for some $f,g\in \C_{\infty}(C')$ $(f<g)$. By (i)$_{n-1}$, there is a decomposition $\D'$ of $C'$ which partitions $P(X_1),\ldots,P(X_m)$. Then $\D=\{(f,g)_{D'}:D'\in\D'\}$ is a decomposition of $C$.
+
+			            \begin{center}
+				            \begin{tikzpicture}[scale=1.5]
+					            %axes
+					            \draw (0, -0.55) -- (0, 4.5);
+					            \draw (-0.25, -0.3) -- (6.3, -0.3);
+
+					            %regions				
+					            \draw[smooth cycle] plot[tension=0.8] coordinates {(0.8, 1.8) (1.3,1.3) (1.8, 1.6) (2.6, 1.4) (2.3, 2.4) (1.8, 2.8) (1.3,2.3) (1.1,2.4)};
+
+					            \draw[smooth cycle] plot[tension=0.8] coordinates {(2,1.6) (2.5,1) (3,1.2) (3.6,0.8) (3,2.6)};
+
+					            \draw[smooth cycle] plot[tension=0.8] coordinates {(4.2,2.5) (4.6,2.3) (5.2,2.5) (5.5,2.7) (5,3.5) (4.6, 3)};
+
+					            %f,g
+					            \draw[smooth] plot[tension=0.8] coordinates {(0.5,0.2) (1.5,0.4) (2,0.2) (2.5,0.3) (3,0.4) (3.5,0.35) (4,0.25) (4.5,0.18) (5,0.2) (5.5, 0.23) (5.8,0.2)};
+
+					            \draw[smooth] plot[tension=0.8] coordinates {(0.5,4) (1.5,3.8) (2,3.7) (2.5,3.9) (3,3.8) (3.5,3.8) (4.3,3.9) (5,3.9) (5.5, 4.03) (5.8,4)};
+
+					            %partitions
+					            \draw[fill] (0.78,-0.3) circle (0.05);
+					            \draw(0.78,-0.3) -- (0.78,4.5);
+					            \draw[fill] (1.97,-0.3) circle (0.05);
+					            \draw (1.97,-0.3) -- (1.97,4.5);
+					            \draw[fill] (2.64,-0.3) circle (0.05);
+					            \draw (2.64,-0.3) -- (2.64,4.5);
+					            \draw[fill] (3.61,-0.3) circle (0.05);
+					            \draw (3.61,-0.3) -- (3.61,4.5);
+					            \draw[fill] (4.2,-0.3) circle (0.05);
+					            \draw (4.2,-0.3) -- (4.2,4.5);
+					            \draw[fill] (5.55,-0.3) circle (0.05);
+					            \draw (5.55,-0.3) -- (5.5,4.5);
+
+					            %labels
+					            \draw (0.79,-0.37) node[below] {\small $D'_1$};
+					            \draw (1.4,-0.35) node[below] {\small $D'_2$};
+					            \draw (2.34,-0.35) node[below] {\small $D'_4$};
+					            \draw (3.15,-0.35) node[below] {\small $D'_6$};
+					            \draw (3.93,-0.35) node[below] {\small $D'_8$};
+					            \draw (4.9,-0.35) node[below] {\small $D'_{10}$};
+					            \draw (5.6,-0.37) node[below] {\small $D'_{11}$};
+
+					            \draw(1.6,1.9) node[left] {\small $X_1$};
+					            \draw(3.25,1.7) node[left] {\small $X_2$};
+					            \draw(5.25,2.9) node[left] {\small $X_3$};
+
+					            \draw(5.85,0.2) node[right] {\small $f$};
+					            \draw(5.85,4) node[right] {\small $g$};
+
+					            \draw(1,3.5) node[right] {\small $C$};
+					            \draw(6.25,-0.35) node[below] {\small $C'$};
+					            \draw(0,4.3) node[left] {\small $M$};
+				            \end{tikzpicture}
+			            \end{center}
+
+			            We want to refine $\D$ so that it partitions $X_1,\ldots,X_m$. The idea is to use the fact that $X_1,\ldots,X_m$ have definable boundaries, and refine $\D'$ until these boundaries induce continuous ``boundary functions'' on each $D'\in\D'$. We then use these boundary functions to define the cells of $\D$. In order for this approach to work, we also need that for all $i$, each of these boundary functions is either contained in, or disjoint from $X_i$, throughout each $D'\in\D'$.
+
+			            More precisely, fix some $D'\in\D'$ and let $D=(f,g)_{D'}$. Without loss of generality, $X_i\cap D\neq\emptyset$ for all $i$, and we may replace $C$ by $D$. Now for $X\subseteq M^n$ and $a\in D'$, let $(X)_a:=\{b:(a,b)\in X\}$ be the \emph{fibre} of $X$ at $a$, and let $\partial_D(X)_a:=\partial(X)_a\cap (D)_a=\partial(X)_a\cap(f(a),g(a))$ be the boundary of $(X)_a$ in $D$.
+
+			            \begin{center}
+				            \begin{tikzpicture}[scale=1.4]
+					            %axes
+					            \draw (0, -0.3) -- (0, 3.5);
+					            \draw (-0.3,0) -- (3.8, 0);
+
+					            %region
+					            \draw[smooth] plot[tension=0.8] coordinates {(0.5,0.6) (1.5,0.9) (2.5,1) (3.5,0.9)};
+					            \draw[smooth] plot[tension=0.8] coordinates {(0.5,3) (1.5,2.6) (2.5,3.2) (3.5,3)};
+
+					            %fibre
+					            \draw[dashed] (1.7,0) -- (1.7,2.655);
+					            \draw[fill] (1.7,0) circle (0.05);
+					            \draw[dashed] (1.7,2.655) -- (0,2.655);
+					            \draw[dashed] (1.7, 0.94) -- (0,0.94);
+					            \draw[fill] (0,2.655) circle (0.05);
+					            \draw[fill] (0,0.94) circle (0.05);
+					            \draw[fill] (1.7,2.655) circle (0.04);
+					            \draw[fill] (1.7,0.94) circle (0.04);
+
+					            %partitions
+					            \draw(0.78,-0.2) -- (0.78,3.5);
+					            \draw (3,-0.2) -- (3,3.5);
+
+					            %labels
+					            \draw (0,3.3) node[left] {\small $M$};
+					            \draw (2.5,2.8) node[right] {\small $X$};
+					            \draw (2.75,-0.04) node[below] {\small $D'$};
+					            \draw (1.7,-0.08) node[below] {\small $a$};
+					            \draw (0,1.8) node[left] {\small $(X)_a$};
+
+				            \end{tikzpicture}
+			            \end{center}
+
+			            Note that the formula $\phi_i(x;y):=\{y\in\partial_D(X_i)_x\}$ is finite on $D'$, hence uniformly finite, by (iii)$_{n-1}$. So after applying (i)$_{n-1}$ and (ii)$_{n-1}$, we may assume that $D'$ is such that the following (definable) properties hold:
+			            \begin{itemize}
+				            \item for each $i$, $x\mapsto|\partial_D(X_i)_x|$ is constant on $D'$;
+				            \item for each $i$, $(X_i)_a$ consists of the same number and type of intervals occurring in the same order for all $a\in D'$ (so e.g.\ if for some $a_0\in D'$ we have:
+				                  \begin{equation*}
+					                  (X_i)_{a_0}=(b^{a_0}_1,b^{a_0}_2)\cup\{b^{a_0}_3\}\cup(b^{a_0}_4,b^{a_0}_5),
+				                  \end{equation*}
+				                  where $b^{a_0}_1<\cdots<b^{a_0}_5$, then for all $a\in D'$ we have:
+				                  \begin{equation*}
+					                  (X_i)_{a}=(b^a_1,b^a_2)\cup\{b^a_3\}\cup(b^a_4,b^a_5)
+				                  \end{equation*}
+				                  for some $b^a_1<\cdots<b^a_5$);
+				            \item there are continuous functions $g_1<\cdots<g_L$ on $D'$ such that for each $a\in D'$, the vector $(g_1(a),\ldots,g_L(a))$ picks out the elements of $\bigcup_i\partial_D(X_i)_a$ in an increasing order, and in particular the decomposition
+				                  \begin{equation*}
+					                  \{(g_i(a),g_{i+1}(a)):i<L\}\cup\{g_i(a):i\leq L\}
+				                  \end{equation*}
+				                  partitions $(X_1)_a,\ldots,(X_m)_a$.
+			            \end{itemize}
+
+			            \begin{center}
+				            \begin{tikzpicture}[scale=1.4]
+					            %axis
+					            \draw (0.2,-0.5) -- (3.3, -0.5);
+
+					            %region
+					            \draw[smooth] plot[tension=0.7] coordinates {(0.5,0.2) (1.5,0.1) (2.5,0.3) (3,0.1)};
+					            \draw[smooth] plot[tension=0.7] coordinates {(0.5,0.6) (1.5,0.7) (2.5,1) (3,0.9)};
+					            \draw[smooth] plot[tension=0.7] coordinates {(0.5,3) (1.5,2.8) (2.5,3.2) (3,2.8)};
+					            \draw[smooth] plot[tension=0.7] coordinates {(0.5,2) (1.5,1.7) (2.5,1.7) (3,2.3)};
+
+					            %partitions
+					            \draw (0.5,-0.7) -- (0.5,3.5);
+					            \draw (0.5, 3.8) node {$\vdots$};
+					            \draw (3,-0.7) -- (3,3.5);
+					            \draw (3, 3.8) node {$\vdots$};
+
+					            %labels
+					            \draw (1,3.3) node[right] {\small $D$};
+					            \draw (0.5,2.4) node[right] {\small $X_2$};
+					            \draw (0.5,1.3) node[right] {\small $X_1$};
+					            \draw (1.8,-0.55) node[below] {\small $D'$};
+					            \draw (2.55,2.9) node[right] {\small $g_3$};
+					            \draw (2.55,1.6) node[right] {\small $g_2$};
+					            \draw (2.55,0.8) node[right] {\small $g_1$};
+					            \draw (2.55,0) node[right] {\small $f$};
+
+				            \end{tikzpicture}
+			            \end{center}
+
+			            It's now easy to see that the following decomposition of $D$ partitions $X_1,\ldots,X_m$:
+			            \begin{equation*}
+				            \{(f,g_1)_{D'}\}\cup\{(g_i,g_{i+1})_{D'}:i<L)\}\cup\{(g_L,g)_{D'}\}\cup\{\Gamma(g_i):i\leq L\}.
+			            \end{equation*}
+
+			      \item We may now assume (i)$_n$ as well. Again, the case $\dim C<n$ follows easily from the inductive hypothesis and \Cref{cellrem} (iii). Now suppose $\dim C=n$, and let $f(x_1,\ldots,x_n):C\to M$ be definable. Consider the sets:
+			            \begin{alignat*}{2}
+				            C_1 & := \big\{ &  & (a_1,\ldots,a_{n-1},b)\in C:f(\a,b)\ \text{is continuous on some open box}\ B\subseteq M^{n-1}           \\
+				                &           &  & \text{such that}\ (\a,b)\in B\times\{b\}\subseteq C\big\};                                               \\
+				            C_2 & := \big\{ &  & (a_1,\ldots,a_{n-1},b)\in C:f(a_1,\ldots,a_{n-1},x_n)\ \text{is either constant, or an isomorphism}      \\
+				                &           &  & \text{on some open interval}\ I\subseteq M\ \text{such that}\ (\a,b)\in \{\a\}\times I\subseteq C\big\}.
+			            \end{alignat*}
+			            By (i)$_n$, there is a decomposition $\D$ of $C$ which partitions $C_1$, $C_2$. This is in fact (almost) the decomposition we are looking for:
+
+			            \begin{claim*}
+				            $f$ is continuous on all open $D\in\D$.
+			            \end{claim*}
+
+			            \begin{subproof}[Proof of Claim (Sketch)]
+				            Let $P:M^n\to M^{n-1}$ be the projection map in the first $n-1$ coordinates, $D'=P(D)$, and $D=(g_1,g_2)_{D'}$ for $g_1,g_2\in\C_{\infty}(D')$ $(g_1<g_2)$. By applying (i)$_{n-1}$, (ii)$_{n-1}$, and the monotonicity theorem, one can show that:
+				            \begin{itemize}
+					            \item $D\subseteq C_1\cap C_2$;
+					            \item for all $\a\in D'$, the function $f(\a,x_n)$ is either constant, or an isomorphism on $(g_1(\a),g_2(\a))$.
+				            \end{itemize}
+				            The rest of the proof is technical but straightforward.
+			            \end{subproof}
+
+			            The result now follows by the claim (as we already know we can appropriately decompose all $D\in\D$ with $\dim D < n$). It's worth noting that the monotonicity theorem is used in an essential way in the proof of (ii)$_n$; its weaker version, given by (i)$_1$, is not enough for the purposes of this argument.
+
+			      \item We again assume (i)$_n$. As always, the case $\dim C<n$ is easy, so we may assume $\dim C=n$. The proof is very similar to the one of (ii)$_n$. Let $\phi(x_1,\ldots,x_n;y)$ be finite over $C$, and define the sets:
+			            \begin{equation*}
+				            \begin{aligned}
+					            C_1 & := \{(a_1,\ldots,a_{n-1},b)\in C:\a\ \text{is good for}\ \phi(x_1,\ldots,x_{n-1},b;y)\}; \\
+					            C_2 & := \{(a_1,\ldots,a_{n-1},b)\in C:b\ \text{is good for}\ \phi(\a,x_n;y)\}.
+				            \end{aligned}
+			            \end{equation*}
+			            By (i)$_n$, there is a decomposition $\D$ of $C$ which partitions $C_1,C_2$. If $\dim D<n$, then $\phi$ is uniformly finite over $D$. Now suppose $D$ is open, then we have:
+
+			            \begin{claim*}
+				            The function $(x_1,\ldots,x_n)\mapsto|\phi(x_1,\ldots,x_n;\M)|$ is constant on $D$.
+			            \end{claim*}
+
+			            \begin{subproof}[Proof of Claim (Sketch)]
+				            The proof breaks down into two steps.
+				            \begin{enumerate}[leftmargin=*,label=(\arabic*)]
+					            \item $D\subseteq C_1\cap C_2$.
+
+					                  This is shown by a projection argument (as in the corresponding claim in (ii)$_n$).
+
+					            \item If $D\subseteq C_1\cap C_2$, then the function $\x\mapsto|\phi(\x;\M)|$ is constant on $D$.
+
+					                  The idea here is the same as the one in (iv)$_1$: suppose the contrary, then for some $K\in\Nat$ there is a non-empty, proper $X=\{\c\in D:|\phi(\c;\M)|=K\}\subseteq D$, which has a boundary point $\c\in D$. Then the function $\x\mapsto|\phi(\x;\M)|$ is not constant on any box $B\subseteq D$ containing $c$; however, using (1), (iv)$_{n-1}$ and (iv)$_1$, we get that the function $\x\mapsto|\phi(\x;\M)|$ is in fact constant on all boxes $B\subseteq D$, which is a contradiction.
+				            \end{enumerate}
+			            \end{subproof}
+
+			            The main claim of (iii)$_n$ now follows. To finish the proof of (\ref{celldeclem}), we still have to show (iv)$_n$; but that follows immediately from (2) above (since if $(\a,b)$ is good for $\phi(x_1,\ldots,x_n;y)$, then certainly $\a$ is good for $\phi(x_1,\ldots,x_{n-1},b;y)$ and $b$ is good for $\phi(\a,x_n;y)$).
+		      \end{enumerate}
+	\end{itemize}
+\end{proof}
+
+\ind Note that most of the main ideas behind cell decomposition are introduced in (ii)$_1$ (as a part of the monotonicity theorem), and in (iii)$_1$ (especially in (iv)$_1$). The inductive step (i)$_n$ also requires a bit of a direct approach, but once (ii)$_{n-1}$ and (iii)$_{n-1}$ are established, the construction appears quite naturally. The inductive steps (ii)$_{n}$ and (iii)$_n$ do not really use any new ideas, but rather rely on projecting to fewer coordinates in a natural way, and manipulating open boxes.
+
+\par\noindent\rule{\textwidth}{0.4pt}
+
+\dimlem*
+
+\ind This is a consequence of the Steinitz exchange lemma (SEL):
+
+\begin{lem*}[Steinitz exchange lemma]
+	Let $b=(b_1,\ldots,b_n)\subseteq a$ be such that $a\subseteq\dcl(A\cup b)$ and $c=(c_1,\ldots,c_k)\subseteq a$ be algebraically independent over $A$. Then:
+	\begin{enumerate}
+		\item $k\leq n$;
+		\item There is some $b'\subseteq b$ with $|b'|= n-k$ such that $a\subseteq\dcl\big(A\cup c\cup b'\big)$.
+	\end{enumerate}
+\end{lem*}
+
+\begin{proof}[Proof of SEL]
+	By adding $A$ as constants in the language, we may assume $A=\emptyset$. We proceed by induction on $k$. If $k=0$, then the statement is trivially true. Now suppose it is true for some $k\geq 0$, and let $c=(c_1,\ldots,c_{k+1})$ be algebraically independent. By the inductive hypothesis we have $a\subseteq \dcl(c_1,\ldots,c_k,b_{k+1},\ldots,b_n)$ (relabel if necessary), and in particular $c_{k+1}\in\dcl(c_1,\ldots,c_k,b_{k+1},\ldots,b_n)$. Since $c$ is algebraically independent we have $c_{k+1} \not\in \dcl(c_1,\ldots,c_k)$, hence $k+1\leq n$. Now let $b''\subseteq(b_{k+1},\ldots,b_n)$ be minimal such that $c_{k+1}\in \dcl\big((c_1,\ldots,c_k)\cup b''\big)$. By relabelling if necessary, we may assume $b''=(b_{k+1},\ldots,b_m)$ for some $k+1\leq m\leq n$. Then by construction $c_{k+1}\not\in\dcl(c_1,\ldots,c_k,b_{k+2},\ldots,b_m)$, so by \Cref{exchange} we have $b_{k+1}\in\dcl\big(c\cup (b_{k+2}\ldots,b_m)\big)$. But now if $b'=(b_{k+2}\ldots,b_n)$, then $a\subseteq\dcl\big(c\cup b'\big)$. This proves the claim.
+\end{proof}
+
+\ind Now we get:
+
+\begin{proof}[Proof of \Cref{dimlem}]
+	We assume again that $A=\emptyset$. By SEL it follows that $\aind(a)\leq\dim(a)$. Now suppose $b\subseteq a$ is maximal algebraically independent, and so $(b,a_0)$ is not algebraically independent for any $a_0\in a$. Then either $a_0\in\dcl(b)$, or for some $i$ we have $b_i\in\dcl\big((b\backslash b_i)\cup a_0\big)$. In the latter case, since $b_i\not\in\dcl(b\backslash b_i)$, we get again that $a_0\in\dcl(b)$ by \Cref{exchange}. This shows that $a\subseteq\dcl(b)$, therefore $\dim(a)\leq\aind(a)$. So $\dim(a)=\aind(a)$ as claimed.
+\end{proof}
+
+
+
+\newpage
+\clearpage
+\pagestyle{plain}
+
+\begin{thebibliography}{100}
+	\addcontentsline{toc}{chapter}{Bibliography}
+
+	\bibitem{nip guide} Simon, P. (2015). \emph{A Guide to NIP Theories}, Cambridge University Press.
+
+	\bibitem{intro} Adler, H. (2008). \emph{Introduction to theories without the independence property}, Model Theory Seminar notes, University of Barcelona, \url{http://home.mathematik.uni-freiburg.de/afshordel/Literatur/intro-nip.pdf}.
+
+	\bibitem{casanovas nip} Casanovas, E. (2011). \emph{NIP formulas and theories}, 2009-2010 Model Theory Seminar notes, University of Barcelona.
+
+	\bibitem{defI} Pillay, A. \& Steinhorn, C. (1986). \emph{Definable sets in ordered structures. I}, Transactions of the American Mathematical Society, Vol. 295, pp. 565-592.
+
+	\bibitem{defII} Knight, J. F., Pillay, A. \& Steinhorn, C. (1986). \emph{Definable sets in ordered structures. II}, Transactions of the American Mathematical Society, Vol. 295, pp. 593-605.
+
+	\bibitem{discrete} Pillay, A. and Steinhorn, C. (1987). \emph{Discrete o-minimal structures}, Annals of Pure and Applied Logic, Vol. 34, pp. 275-289.
+
+	\bibitem{defIII} Pillay, A. \& Steinhorn, C. (1988). \emph{Definable sets in ordered structures. III}, Transactions of the American Mathematical Society, Vol. 309, pp. 469-476.
+
+	\bibitem{tame} Van den Dries, L. (1998). \emph{Tame Topology and O-Minimal Structures}, London Mathematical Society Lecture Note Series, Vol. 248, Cambridge: Cambridge University Press.
+
+	\bibitem{ominandvariations} Macpherson, D. (2000). `Notes on O-Minimality and Variations', in: \emph{Model Theory, Algebra, and Geometry}, Mathematical Sciences Research Institute Publication, Vol. 39, pp. 97-130, Cambridge University Press.
+
+	\bibitem{ch9} Marcja, A. \& Toffalori, C. (2003). `O-minimality', in: \emph{A Guide to Classical and Modern Model Theory}, Trends in Logic (Studia Logica Library), Vol. 19, Springer, Dordrecht. \url{https://doi.org/10.1007/978-94-007-0812-9_9}
+
+	\bibitem{typedef} Pillay, A. (2004). \emph{Type-Definability, Compact Lie Groups, and O-minimality}, Journal of Mathematical Logic, Vol. 4, No. 2, pp. 147-162.
+
+	\bibitem{desc chain con} Berarducci, A., Otero, M., Peterzil, Y. \& Pillay, A. (2005). \emph{A descending chain condition for groups definable in o-minimal structures}, Annals of Pure and Applied Logic, Vol. 134, pp. 303–313.
+
+	\bibitem{groups measures nip} Hrushovski, E., Peterzil, Y. \& Pillay, A. (2006). \emph{Groups, Measures, and the NIP}. \url{https://arxiv.org/abs/math/0607442}
+
+	\bibitem{nip inv meas} Hrushovski, E. \& \& Pillay, A. (2009). \emph{On NIP and invariant measures}. \url{https://arxiv.org/abs/0710.2330v2}
+
+	\bibitem{generically} Hrushovski, E., Pillay, A. \& Simon, P. (2010). \emph{Generically stable and smooth measures in NIP theories}. \url{https://arxiv.org/abs/1002.4763}
+
+	\bibitem{nip og} Shelah, S. (1971). \emph{Stability, the f.c.p., and superstability; model theoretic properties of formulas in first order theory}, Annals of Mathematical Logic, Vol. 3, Issue 3, pp. 271-362, \url{https://www.sciencedirect.com/science/article/pii/0003484371900155}
+
+	\bibitem{thesis} Achille, A. (2015). \emph{Groups definable in o-minimal and NIP settings}, PhD thesis, University of Pisa.
+
+	\bibitem{neural1} Tressl, M. (2010). \emph{Introduction to O-Minimal Structures and an Application to Neural Network Learning}, lecture notes, London Mathematical Society and EPSRC Short Instructional Course - Model Theory, University of Leeds, \url{http://www1.maths.leeds.ac.uk/school/modeltheory/tresslnotes.pdf}
+
+	\bibitem{groups def omin} Pillay, A. (1988). \emph{On Groups and Fields Definable in O-minimal Structures}, Journal of Pure Applied Algebra, Vol. 53, pp. 239-255.
+
+	\bibitem{vdr} Van den Dries, L. (1984). \emph{Remarks on Tarski's problem concerning $(\R, +, \cdot, \exp)$}, Studies in Logic and the Foundations of Mathematics, Elsevier,	Vol. 112, pp. 97-121, \url{https://www.sciencedirect.com/science/article/pii/S0049237X08718111}
+
+	\bibitem{Pillay survey} Peterzil, Y. (2010). \emph{Pillay's conjecture and its solution—a survey}. In F. Delon, U. Kohlenbach, P. Maddy, \& F. Stephan (Eds.), Logic Colloquium 2007 (Lecture Notes in Logic, pp. 177-203). Cambridge: Cambridge University Press.
+
+	\bibitem{chain cond dep groups} Kaplan, I. \& Shelah, S. (2013). \emph{Chain conditions in dependent groups}, Annals of Pure and Applied Logic, Vol. 164, Issue 12, pp. 1322-1337, \url{https://www.sciencedirect.com/science/article/pii/S0168007213000833}
+
+	\bibitem{min bounded} Shelah, S. (2006). \emph{Minimal bounded index subgroup for dependent theories}, \url{https://arxiv.org/abs/math/0603652}
+
+	\bibitem{survey1} Otero, M. (2008). \emph{A survey on groups definable in o-minimal structures}. In Z. Chatzidakis, D. Macpherson, A. Pillay, \& A. Wilkie (Eds.), Model Theory with Applications to Algebra and Analysis (London Mathematical Society Lecture Note Series, pp. 177-206). Cambridge: Cambridge University Press.
+
+	\bibitem{survey2} Conversano, A. (2020). \emph{Groups definable in o-minimal structures: various properties and a diagram}, \url{https://arxiv.org/abs/2010.12782}
+
+	\bibitem{stability function} Keisler, H. (1978). \emph{The stability function of a theory}, Journal of Symbolic Logic, Vol. 43, Issue 3, pp. 481-486.
+
+	\bibitem{six classes} Keisler, H. (1976). \emph{Six classes of theories}. Journal of the Australian Mathematical Society, Vol. 21, Issue 3, pp. 257-266.
+
+	\bibitem{keisler} Keisler, H. J. (1987). \emph{Measures and forking}, Annals of Pure and Applied Logic, Vol. 34, Issue 2, pp. 119-169. \url{https://www.sciencedirect.com/science/article/pii/0168007287900698}
+
+	\bibitem{casanovas} Casanovas, E. (2011). \emph{Simple theories and hyperimaginaries}, Lecture Notes in Logic, Cambridge University Press.
+
+	\bibitem{a course in mt} Tent, K. \& Ziegler, M. (2012). \emph{A Course in Model Theory}, Lecture Notes in Logic, Cambridge University Press.
+
+	\bibitem{mt intro} Marker, D. (2002). \emph{Model Theory: An Introduction}, New York: Springer.
+
+	\bibitem{Pillay general} Edmundo, M. J., Mamino, M., Prelli, L., Ramakrishnan, J., \& Terzo, G. (2017). \emph{On Pillay's conjecture in the general case}, Advances in Mathematics, Vol. 310, pp. 940-992. \url{https://www.sciencedirect.com/science/article/pii/S000187081530414X}
+
+	\bibitem{ordered vs} Eleftheriou, P., \& Starchenko, S. (2007). \emph{Groups definable in ordered vector spaces over ordered division rings}. Journal of Symbolic Logic, Vol. 72, Issue 4, pp. 1108-1140.
+
+	\bibitem{semi-bounded} Peterzil, Y. (2009). \emph{Returning to semi-bounded sets}, The Journal of Symbolic Logic, Vol. 74, Issue 2, pp. 597-617.
+
+	\bibitem{simple} Wagner, F. O. (2000) \emph{Simple theories}, Mathematics and its Applications, Vol.
+	503, Kluwer Academic Publishers, Dordrecht.
+
+	\bibitem{stable groups 2} Poizat, B. \& Klein, M. G. (2001). \emph{Stable Groups}. American Mathematical Society.
+
+	\bibitem{wilkie} Wilkie, A. J. (1996). \emph{Model Completeness Results for Expansions of the Ordered Field of Real Numbers by Restricted Pfaffian Functions and the Exponential Function}, Journal of the American Mathematical Society, Vol. 9, pp. 1051-1094.
+
+	\bibitem{trichotomy} Peterzil, Y., \& Starchenko, S. (1998). \emph{A trichotomy theorem for o-minimal structures}. Proceedings of the London Mathematical Society, Vol. 77, Issue 3, pp. 481-523.
+
+	\bibitem{strong dep} Shelah, S. (2009). \emph{Strongly dependent theories}. \url{https://arxiv.org/abs/math/0504197}
+
+	\bibitem{n dep} Chernikov, A., Palacin, D. \& Takeuchi, K. (2014).  \emph{On $n$-dependence}. \url{https://arxiv.org/abs/1411.0120}
+
+	\bibitem{n dep 2} Hempel, N. (2014). \emph{On n-dependent groups and fields}.
+	\url{https://arxiv.org/abs/1401.4880}
+
+	\bibitem{VC} Vapnik, V.N. \& Chervonenkis, A.Y. (1971). \emph{On the uniform convergence of relative frequencies of events to their probabilities}. Theory of Probability and its Applications, Vol. 16, pp. 264–280.
+
+	\bibitem{VC 2} Laskowski, M.C. (1992). \emph{Vapnik‐Chervonenkis Classes of Definable Sets}. Journal of the London Mathematical Society, Vol. 45, Issue 2, pp. 377-384.
+
+	\bibitem{distal} Simon, P. (2011). \emph{Distal and non-distal NIP theories}, \url{https://arxiv.org/abs/1103.2239}
+
+\end{thebibliography}
+
+
+
+
+\end{document}
