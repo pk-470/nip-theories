@@ -283,6 +283,7 @@
 \begin{exmp}\label{nipformex}\
 	\begin{enumerate}[itemsep=12pt]
 		\item It is easy to see that stable formulas are NIP, since if for sequences $(a_i:i<\omega)$, $(b_S:S\subseteq\omega)$ we have $\models\phi(a_i;b_S)\iff i\in S$, then certainly $\models\phi(a_i;b_j)\iff i<j$, i.e.\ $\phi$ has the order property. In fact we can say a bit more. Suppose $\phi(x;y)$ has IP, then so does $\phi^{-1}(y;x)$ by \Cref{swap}. By compactness, this is witnessed by sequences $A=(a_i:i<\kappa)$ and $B=(b_S:S\subseteq\kappa)$ for any $\kappa$. So for each $S\subseteq\kappa$ the collection $p_S(x)=\{\phi(x;a_i):i\in S\}\cup\{\neg\phi(x;a_i):i\not\in S\}$ is a complete $\phi$-type over $A$ (realised by $b_S$), and for $S\neq S'$ we have $p_S\neq p_{S'}$ (since clearly $b_S\neq b_{S'}$). We have therefore showed:
+		      \bigskip
 
 		      \begin{cor}\label{stable->nip}\
 			      \begin{enumerate}
@@ -292,16 +293,21 @@
 		      \end{cor}
 
 		\item From the definitions and \Cref{ipcomp} (ii), we get the following:
+		      \bigskip
 		      \begin{lem}
 			      A formula $\phi(x;y)$ has IP if and only if for every finite bipartite graph on sets $(X,Y)$, there exist sequences $(a_x:x\in X)$ and $(b_y:y\in Y)$ such that $\models\phi(a_x;b_y)\iff x\sim y$.
 		      \end{lem}
+		      \bigskip
+
 		      \begin{proof}
-			      $(\implies)$: Fix sequences $(a_i:i<\omega)$, $(b_S:S\subseteq \omega)$ witnessing that $\phi$ is IP, and a bipartite graph on $(n,Y)$, for some finite set $Y$ and $n<\omega$. Then interpret $i<n$ as $a_i$ and $y\in Y$ as $b_{\Gamma(y)}$ (recall: $\Gamma(y) :=\{i<n:i\sim y\}$).
+			      $(\implies)$: Fix sequences $(a_i:i<\omega)$, $(b_S:S\subseteq \omega)$ witnessing that $\phi$ is IP, and a bipartite graph on $(n,Y)$, for some finite set $Y$ and $n<\omega$. Then interpret $i<n$ as $a_i$ and $y\in Y$ as $b_{\Gamma(y)}$, where $\Gamma(y) :=\{i<n:i\sim y\}$.
+			      \bigskip
 
 			      $(\Leftarrow)$: For $n<\omega$ define a bipartite graph on $(n,\PS(n))$, where $i\sim S\iff i\in S$. Then $(a_i:i<n)$, $(b_S:S\subseteq \PS(n))$ witness that $\phi$ shatters a set of size $n$.
 		      \end{proof}
+		      \bigskip
 
-		      So if $\phi(x;y):=(x\sim y)$ and $(G,\sim)$ is an infinite graph, then $\phi$ has IP in $\Th(G)$ if and only if all finite bipartite graphs embed in some elementary extension of $G$ (hence also in $G$ itself). In particular, this is true for the Rado graph $G_R$ (since all finite graphs embed in $G_R$). In fact, since for all finite disjoint $X,Y\subseteq V(G_R)$ there is a vertex $u\not\in X\cup Y$ such that $u\sim x$ for $x\in X$ and $u\not\sim y$ for $y\in Y$, it follows that $\phi$ shatters every finite subset of $V(G_R)$.
+		      \ind Note that we can further insist that the interpretation in the $(\implies)$ direction above is injective. In particular, given a bipartite graph $G$ on $(n,Y)$, order the elements of $Y$ as $\{y_0,\ldots,y_{m-1}\}$ and consider a bipartite graph $G'$ on $(n+|Y|,Y)$ which expands $G$ by connecting $n+i$ with $y_i$ for $i<m$. Now if we interpret $i<n$ as $a_i$ and $y\in Y$ as $b_{\Gamma'(y)}$, where $\Gamma'(y) :=\{i<n+|Y|:i\sim_{G'} y\}$, we still have that $\models\phi\left(a_x;b_{\Gamma'(y)}\right)\iff x\sim_G y$, and now the $b_{\Gamma'(y)}$ are all distinct. So if $\phi(x;y):=(x\sim y)$ and $(G,\sim)$ is an infinite graph, then $\phi$ has IP in $\Th(G)$ if and only if all finite bipartite graphs embed in some elementary extension of $G$ (hence also in $G$ itself). In particular, this is true for the Rado graph $G_R$ (since all finite graphs embed in $G_R$). In fact, since for all finite disjoint $X,Y\subseteq V(G_R)$ there is a vertex $u\not\in X\cup Y$ such that $u\sim x$ for $x\in X$ and $u\not\sim y$ for $y\in Y$, it follows that $\phi$ shatters every finite subset of $V(G_R)$.
 
 		\item In any complete theory $T$ with infinite models, the formula $\phi(x;y) :=(x=y)$ is NIP (as it has VC-dimension 1).
 
@@ -531,7 +537,7 @@ This definition draws a possible distinction between o-minimality of a fixed str
 
 \ind Let's see what it is about this claim that could go wrong. Given an o-minimal structure $\M$, a formula $\phi(x;y)$ and a $|y|$-tuple $a$, we know by definition that $\phi(\M;a)$ is a union of $k_a$ disjoint intervals, for some $k_a\in \Nat$. Now suppose that $k_a$ is unbounded over all tuples $a$ in $M$. This means that if $\theta_k(y)$ is the $\L$-formula saying ``$\{x:\phi(x;y)\}$ is the union of at most $k$ intervals'', then for all $k\in \Nat$ we have $\M\models \exists y\,\neg\theta_k(y)$. Now a simple compactness argument shows that there is some $\N\models \Th(M)$ and a tuple $a\in N$ such that for all $k\in\Nat$ we have $\N\models\neg\theta_k(a)$, which implies that $\N$ is not o-minimal. Therefore, in order to pass from o-minimality to strong o-minimality, we need some sort of a ``uniform finiteness'' argument for the number of intervals each formula can define in $\M$. This is essentially a property concerning one dimensional ``fibres'' of $\phi(\M^{|y|+1})$, and can be established alongside some more general results on definable sets in dimensions higher than 1.
 
-\ind The goal of this section is twofold. We start by presenting the tool of cell decomposition, a cornerstone of the study of definable sets in $M^n$ for $n>1$, which was introduced by Pillay and Steinhorn in \cite{defII}, \cite{discrete} and \cite{defIII}. Cell decomposition is fundamental to any further study of o-minimality, and has a variety of analytical, algebraic and geometric applications. Our focus here (the second main point of the section) is its use in showing that the complete theory of an arbitrary o-minimal structure is (strongly) o-minimal; this powerful result was proved in \cite{defII} and \cite{defIII}. Consequently, the term ``strong o-minimality'' becomes obsolete, and we will not use it outside of this section (as it is not used in the recent literature either).
+\ind The goal of this section is twofold. We start by presenting the tool of cell decomposition, a cornerstone of the study of definable sets in $M^n$ for $n>1$, which was introduced by Pillay, Steinhorn and Knight in \cite{defII}, \cite{discrete} and \cite{defIII}. Cell decomposition is fundamental to any further study of o-minimality, and has a variety of analytical, algebraic and geometric applications. Our focus here (the second main point of the section) is its use in showing that the complete theory of an arbitrary o-minimal structure is (strongly) o-minimal; this powerful result was proved in \cite{defII} and \cite{defIII}. Consequently, the term ``strong o-minimality'' becomes obsolete, and we will not use it outside of this section (as it is not used in the recent literature either).
 
 \ind As already mentioned, the key step towards strong minimality is a uniform finiteness argument, which has a different form and proof according to whether the underlying order on $\M$ is dense or discrete. We will therefore treat these two cases separately. Our main focus will be the dense case, as it turns out that discrete o-minimal structures are not very interesting, in the sense that they do not admit any definable functions apart from piecewise translations in one coordinate.
 
